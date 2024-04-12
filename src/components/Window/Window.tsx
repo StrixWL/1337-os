@@ -6,6 +6,8 @@ interface WindowProps {
     resizeOffset?: number;
     dragOffset?: number;
     children?: ReactNode;
+	minWidth?: number;
+	minHeight?: number;
 }
 
 interface WindowState {
@@ -20,6 +22,8 @@ const Window = ({
     resizeOffset = 10,
     dragOffset = 30,
     children,
+	minWidth = 200,
+	minHeight = 200,
 }: WindowProps) => {
     const [state, setState] = useState<WindowState>({
         sizes: { width: 200, height: 200, left: 300, top: 200 },
@@ -132,7 +136,9 @@ const Window = ({
                     break;
             }
 
-            setState((prevState) => ({ ...prevState, sizes: newSizes }));
+            newSizes.width = newSizes.width < minWidth ? minWidth : newSizes.width
+            newSizes.height = newSizes.height < minHeight ? minHeight : newSizes.height
+			setState((prevState) => ({ ...prevState, sizes: newSizes }));
         }
     };
 
