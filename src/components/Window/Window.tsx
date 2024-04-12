@@ -1,11 +1,14 @@
 import styles from './Window.module.scss';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState, ReactNode } from 'react';
 
 interface WindowProps {
-    backgroundColor: string
+    backgroundColor?: string,
+    resizeOffset?: number,
+    dragOffset?: number,
+    children?: ReactNode
 }
 
-const Window = ({ backgroundColor }: WindowProps) => {
+const Window = ({ backgroundColor = 'transparent', resizeOffset = 10, dragOffset = 30, children }: WindowProps) => {
     const [startDrag, setStartDrag] = useState({ x: 0, y: 0 })
     const [sizes, setSizes] = useState({ width: 200, height: 200, left: 300, top: 200 })
     const [prevSizes, setPrevSizes] = useState({ width: 200, height: 200, left: 300, top: 200 })
@@ -20,25 +23,24 @@ const Window = ({ backgroundColor }: WindowProps) => {
             const top = event.clientY - boundingRect.top;
             const right = boundingRect.width - left
             const bottom = boundingRect.height - top
-            const offset = 10
 
-            if (top < offset && left < offset)
+            if (top < resizeOffset && left < resizeOffset)
                 setCursor('nw-resize');
-            else if (bottom < offset && left < offset)
+            else if (bottom < resizeOffset && left < resizeOffset)
                 setCursor('sw-resize');
-            else if (bottom < offset && right < offset)
+            else if (bottom < resizeOffset && right < resizeOffset)
                 setCursor('se-resize');
-            else if (top < offset && right < offset)
+            else if (top < resizeOffset && right < resizeOffset)
                 setCursor('ne-resize');
-            else if (top < offset)
+            else if (top < resizeOffset)
                 setCursor('n-resize');
-            else if (left < offset)
+            else if (left < resizeOffset)
                 setCursor('w-resize');
-            else if (bottom < offset)
+            else if (bottom < resizeOffset)
                 setCursor('s-resize');
-            else if (right < offset)
+            else if (right < resizeOffset)
                 setCursor('e-resize');
-            else if (top < 30)
+            else if (top < dragOffset)
                 setCursor('default')
             else
                 setCursor('auto');
@@ -138,6 +140,7 @@ const Window = ({ backgroundColor }: WindowProps) => {
     return (
         <div ref={ref} style={{ cursor: cursor, width: sizes.width, height: sizes.height, left: sizes.left, top: sizes.top, backgroundColor }} onMouseDown={handleMouseDown} className={styles['window']}>
             {/* <div style={{ cursor: cursor, width: sizes.width, height: sizes.height }} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} className={styles['window']}> */}
+            {children}
         </div>
     );
 };
