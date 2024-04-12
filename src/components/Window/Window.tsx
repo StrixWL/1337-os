@@ -1,145 +1,179 @@
-import styles from './Window.module.scss';
-import { MouseEvent, useEffect, useRef, useState, ReactNode } from 'react';
+import styles from "./Window.module.scss";
+import { MouseEvent, useEffect, useRef, useState, ReactNode } from "react";
 
 interface WindowProps {
-    backgroundColor?: string,
-    resizeOffset?: number,
-    dragOffset?: number,
-    children?: ReactNode
+    backgroundColor?: string;
+    resizeOffset?: number;
+    dragOffset?: number;
+    children?: ReactNode;
 }
 
-const Window = ({ backgroundColor = 'transparent', resizeOffset = 10, dragOffset = 30, children }: WindowProps) => {
-    const [startDrag, setStartDrag] = useState({ x: 0, y: 0 })
-    const [sizes, setSizes] = useState({ width: 200, height: 200, left: 300, top: 200 })
-    const [prevSizes, setPrevSizes] = useState({ width: 200, height: 200, left: 300, top: 200 })
-    const [isDragging, setIsDragging] = useState(false)
-    const [cursor, setCursor] = useState('auto')
-    const ref = useRef<HTMLDivElement>(null)
+interface WindowState {
+    sizes: { width: number; height: number; left: number; top: number };
+    startDrag: { x: number; y: number };
+    isDragging: boolean;
+    cursor: string;
+}
+
+const Window = ({
+    backgroundColor = "transparent",
+    resizeOffset = 10,
+    dragOffset = 30,
+    children,
+}: WindowProps) => {
+    const [state, setState] = useState<WindowState>({
+        sizes: { width: 200, height: 200, left: 300, top: 200 },
+        startDrag: { x: 0, y: 0 },
+        isDragging: false,
+        cursor: "auto",
+    });
+    const ref = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = (event: globalThis.MouseEvent) => {
-        if (!isDragging) {
+        if (!state.isDragging) {
             const boundingRect = ref.current!.getBoundingClientRect();
             const left = event.clientX - boundingRect.left;
             const top = event.clientY - boundingRect.top;
-            const right = boundingRect.width - left
-            const bottom = boundingRect.height - top
+            const right = boundingRect.width - left;
+            const bottom = boundingRect.height - top;
 
-            if (top < resizeOffset && left < resizeOffset)
-                setCursor('nw-resize');
+            let cursor = "auto";
+            if (top < resizeOffset && left < resizeOffset) cursor = "nw-resize";
             else if (bottom < resizeOffset && left < resizeOffset)
-                setCursor('sw-resize');
+                cursor = "sw-resize";
             else if (bottom < resizeOffset && right < resizeOffset)
-                setCursor('se-resize');
+                cursor = "se-resize";
             else if (top < resizeOffset && right < resizeOffset)
-                setCursor('ne-resize');
+                cursor = "ne-resize";
             else if (top < resizeOffset)
-                setCursor('n-resize');
+				cursor = "n-resize";
             else if (left < resizeOffset)
-                setCursor('w-resize');
+				cursor = "w-resize";
             else if (bottom < resizeOffset)
-                setCursor('s-resize');
+				cursor = "s-resize";
             else if (right < resizeOffset)
-                setCursor('e-resize');
+				cursor = "e-resize";
             else if (top < dragOffset)
-                setCursor('default')
-            else
-                setCursor('auto');
-        }
-        else {
-            const hDrag = event.clientX - startDrag.x
-            const vDrag = event.clientY - startDrag.y
-            const cursor = ref.current!.style.cursor
+				cursor = "default";
+
+            setState((prevState) => ({ ...prevState, cursor }));
+        } else {
+            const hDrag = event.clientX - state.startDrag.x;
+            const vDrag = event.clientY - state.startDrag.y;
+            const cursor = state.cursor;
+
+            let newSizes = { ...state.sizes };
+
             switch (cursor) {
-                case 'n-resize': // top
-                    setSizes({
-                        ...prevSizes,
-                        height: prevSizes.height - vDrag,
-                        top: prevSizes.top + vDrag
-                    })
+                case "n-resize": // top
+                    newSizes = {
+                        ...state.sizes,
+                        height: state.sizes.height - vDrag,
+                        top: state.sizes.top + vDrag,
+                    };
                     break;
-                case 'ne-resize': // top right
-                    setSizes({
-                        ...prevSizes,
-                        width: prevSizes.width + hDrag,
-                        height: prevSizes.height - vDrag,
-                        top: prevSizes.top + vDrag
-                    })
+                case "ne-resize": // top right
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width + hDrag,
+                        height: state.sizes.height - vDrag,
+                        top: state.sizes.top + vDrag,
+                    };
                     break;
-                case 'e-resize': // right
-                    setSizes({
-                        ...prevSizes,
-                        width: prevSizes.width + hDrag,
-                    })
+                case "e-resize": // right
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width + hDrag,
+                    };
                     break;
-                case 'se-resize': // bottom right
-                    setSizes({
-                        ...prevSizes,
-                        width: prevSizes.width + hDrag,
-                        height: prevSizes.height + vDrag,
-                    })
+                case "se-resize": // bottom right
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width + hDrag,
+                        height: state.sizes.height + vDrag,
+                    };
                     break;
-                case 's-resize': // bottom
-                    setSizes({
-                        ...prevSizes,
-                        height: prevSizes.height + vDrag,
-                    })
+                case "s-resize": // bottom
+                    newSizes = {
+                        ...state.sizes,
+                        height: state.sizes.height + vDrag,
+                    };
                     break;
-                case 'sw-resize': // bottom left
-                    setSizes({
-                        ...prevSizes,
-                        width: prevSizes.width - hDrag,
-                        height: prevSizes.height + vDrag,
-                        left: prevSizes.left + hDrag,
-                    })
+                case "sw-resize": // bottom left
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width - hDrag,
+                        height: state.sizes.height + vDrag,
+                        left: state.sizes.left + hDrag,
+                    };
                     break;
-
-                case 'w-resize': // left
-                    setSizes({
-                        ...prevSizes,
-                        width: prevSizes.width - hDrag,
-                        left: prevSizes.left + hDrag,
-                    })
+                case "w-resize": // left
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width - hDrag,
+                        left: state.sizes.left + hDrag,
+                    };
                     break;
-
-                case 'nw-resize': // top left
-                    setSizes({
-                        width: prevSizes.width - hDrag,
-                        height: prevSizes.height - vDrag,
-                        left: prevSizes.left + hDrag,
-                        top: prevSizes.top + vDrag
-                    })
+                case "nw-resize": // top left
+                    newSizes = {
+                        ...state.sizes,
+                        width: state.sizes.width - hDrag,
+                        height: state.sizes.height - vDrag,
+                        left: state.sizes.left + hDrag,
+                        top: state.sizes.top + vDrag,
+                    };
                     break;
-                case 'default':
-                    setSizes({
-                        ...prevSizes,
-                        left: prevSizes.left + hDrag,
-                        top: prevSizes.top + vDrag
-                    })
+                case "default":
+                    newSizes = {
+                        ...state.sizes,
+                        left: state.sizes.left + hDrag,
+                        top: state.sizes.top + vDrag,
+                    };
+                    break;
             }
+
+            setState((prevState) => ({ ...prevState, sizes: newSizes }));
         }
-    }
+    };
+
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
-        setIsDragging(true)
-        setPrevSizes(sizes)
-        setStartDrag({
-            x: event.clientX,
-            y: event.clientY
-        })
-    }
+        setState((prevState) => ({
+            ...prevState,
+            isDragging: true,
+            startDrag: {
+                x: event.clientX,
+                y: event.clientY,
+            },
+        }));
+    };
+
     const handleMouseUp = () => {
-        setIsDragging(false)
-    }
+        setState((prevState) => ({ ...prevState, isDragging: false }));
+    };
+
     useEffect(() => {
-        window.addEventListener('mouseup', handleMouseUp)
-        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener("mouseup", handleMouseUp);
+        window.addEventListener("mousemove", handleMouseMove);
         return () => {
-            window.removeEventListener('mouseup', handleMouseUp)
-            window.removeEventListener('mousemove', handleMouseMove)
-        }
-    }, [isDragging])
+            window.removeEventListener("mouseup", handleMouseUp);
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, [state.isDragging]);
+
     return (
-        <div ref={ref} style={{ cursor: cursor, width: sizes.width, height: sizes.height, left: sizes.left, top: sizes.top, backgroundColor }} onMouseDown={handleMouseDown} className={styles['window']}>
-            {/* <div style={{ cursor: cursor, width: sizes.width, height: sizes.height }} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} className={styles['window']}> */}
+        <div
+            ref={ref}
+            style={{
+                cursor: state.cursor,
+                width: state.sizes.width,
+                height: state.sizes.height,
+                left: state.sizes.left,
+                top: state.sizes.top,
+                backgroundColor,
+            }}
+            onMouseDown={handleMouseDown}
+            className={styles["window"]}
+        >
             {children}
         </div>
     );
