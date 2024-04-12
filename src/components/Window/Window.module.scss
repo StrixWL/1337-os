@@ -1,0 +1,17 @@
+.window {
+    position: fixed;
+    // left: 40%;
+    // top: 40%;
+    // width: 200px;
+    // height: 200px;
+    background-color: lightcoral;
+    border-radius: 5px;
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background-color: aquamarine;
+        top: 30px;
+    }
+}
