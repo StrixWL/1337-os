@@ -62,14 +62,16 @@ const Window = ({
 
             setState((prevState) => ({ ...prevState, cursor }));
         } else {
-            const hDrag = event.clientX - state.startDrag.x;
-            const vDrag = event.clientY - state.startDrag.y;
+            let hDrag = event.clientX - state.startDrag.x;
+            let vDrag = event.clientY - state.startDrag.y;
             const cursor = state.cursor;
 
             let newSizes = { ...state.sizes };
 
             switch (cursor) {
                 case "n-resize": // top
+                    if (state.sizes.height - vDrag < minHeight)
+                        vDrag = state.sizes.height - minHeight
                     newSizes = {
                         ...state.sizes,
                         height: state.sizes.height - vDrag,
@@ -77,6 +79,10 @@ const Window = ({
                     };
                     break;
                 case "ne-resize": // top right
+                    if (state.sizes.height - vDrag < minHeight)
+                        vDrag = state.sizes.height - minHeight
+                    if (state.sizes.width + hDrag < minWidth)
+                        hDrag = minWidth - state.sizes.width
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width + hDrag,
@@ -85,12 +91,18 @@ const Window = ({
                     };
                     break;
                 case "e-resize": // right
+                    if (state.sizes.width + hDrag < minWidth)
+                        hDrag = minWidth - state.sizes.width
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width + hDrag,
                     };
                     break;
                 case "se-resize": // bottom right
+                    if (state.sizes.width + hDrag < minWidth)
+                        hDrag = minWidth - state.sizes.width
+                    if (state.sizes.height + vDrag < minHeight)
+                        vDrag = minHeight - state.sizes.height
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width + hDrag,
@@ -98,12 +110,18 @@ const Window = ({
                     };
                     break;
                 case "s-resize": // bottom
+                    if (state.sizes.height + vDrag < minHeight)
+                        vDrag = minHeight - state.sizes.height
                     newSizes = {
                         ...state.sizes,
                         height: state.sizes.height + vDrag,
                     };
                     break;
                 case "sw-resize": // bottom left
+                    if (state.sizes.width - hDrag < minWidth)
+                        hDrag = state.sizes.width - minWidth
+                    if (state.sizes.height + vDrag < minHeight)
+                        vDrag = minHeight - state.sizes.height
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width - hDrag,
@@ -112,6 +130,8 @@ const Window = ({
                     };
                     break;
                 case "w-resize": // left
+                    if (state.sizes.width - hDrag < minWidth)
+                        hDrag = state.sizes.width - minWidth
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width - hDrag,
@@ -119,6 +139,10 @@ const Window = ({
                     };
                     break;
                 case "nw-resize": // top left
+                    if (state.sizes.height - vDrag < minHeight)
+                        vDrag = state.sizes.height - minHeight
+                    if (state.sizes.width - hDrag < minWidth)
+                        hDrag = state.sizes.width - minWidth
                     newSizes = {
                         ...state.sizes,
                         width: state.sizes.width - hDrag,
@@ -135,18 +159,7 @@ const Window = ({
                     };
                     break;
             }
-
-            setState((prevState) => {
-                if (newSizes.width < minWidth) {
-                    newSizes.width = minWidth;
-                    newSizes.left = prevState.sizes.left;
-                }
-                if (newSizes.height < minHeight) {
-                    newSizes.height = minHeight;
-                    newSizes.top = prevState.sizes.top;
-                }
-                return { ...prevState, sizes: newSizes };
-            });
+            setState((prevState) => ({ ...prevState, sizes: newSizes }));
         }
     };
 
