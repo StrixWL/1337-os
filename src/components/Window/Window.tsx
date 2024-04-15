@@ -202,6 +202,19 @@ const Window = ({
             className={styles["window"]}
         >
             {children}
+            {state.isDragging && (
+                <div
+                    style={{
+                        position: "fixed",
+                        width: "100vw",
+                        height: "100vh",
+                        top: 0,
+                        left: 0,
+                        cursor: state.cursor,
+						zIndex: 100
+                    }}
+                ></div>
+            )}
         </div>
     );
 };
