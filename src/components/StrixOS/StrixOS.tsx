@@ -77,21 +77,12 @@ const StrixOS = () => {
 			>
 				ADD
 			</button>
-			<button
-				onClick={() => {
-					dispatch({
-						type: "FOCUS",
-						props: {
-                            id: 1
-						},
-					});
-				}}
-			>
-				FOCUS
-			</button>
 			{Object.keys(windows).map((key: string, index: number) => {
 				const window = windows[parseInt(key)];
-				return <Window key={index} {...window} />;
+				return <Window key={index} {...window} focus={() => dispatch({
+                    type: "FOCUS",
+                    props: {id: window.id}
+                })} />;
 			})}
 			<Desktop />
 			<Taskbar />

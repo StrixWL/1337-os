@@ -8,5 +8,6 @@ export interface WindowProps {
     dragOffset?: number;
     minWidth?: number;
     minHeight?: number;
+    focus?: () => void
     children?: ReactNode;
 }

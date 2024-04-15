@@ -16,6 +16,7 @@ const Window = ({
     minWidth = 200,
     minHeight = 200,
     children,
+    focus,
 	zIndex = 1
 }: WindowProps) => {
     const [state, setState] = useState<WindowState>({
@@ -157,6 +158,8 @@ const Window = ({
     };
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+        // focus! >:(
+        focus!()
         setState((prevState) => ({
             ...prevState,
             isDragging: true,
