@@ -1,14 +1,6 @@
 import styles from "./Window.module.scss";
-import { MouseEvent, useEffect, useRef, useState, ReactNode } from "react";
-
-interface WindowProps {
-    backgroundColor?: string;
-    resizeOffset?: number;
-    dragOffset?: number;
-    minWidth?: number;
-    minHeight?: number;
-    children?: ReactNode;
-}
+import { MouseEvent, useEffect, useRef, useState } from "react";
+import { WindowProps } from "../../utils/types"
 
 interface WindowState {
     sizes: { width: number; height: number; left: number; top: number };
@@ -24,6 +16,7 @@ const Window = ({
     minWidth = 200,
     minHeight = 200,
     children,
+	zIndex = 1
 }: WindowProps) => {
     const [state, setState] = useState<WindowState>({
         sizes: { width: 200, height: 200, left: 300, top: 200 },
@@ -32,7 +25,6 @@ const Window = ({
         cursor: "auto",
     });
     const ref = useRef<HTMLDivElement>(null);
-
     const handleMouseMove = (event: globalThis.MouseEvent) => {
         if (!state.isDragging) {
             const boundingRect = ref.current!.getBoundingClientRect();
@@ -42,7 +34,8 @@ const Window = ({
             const bottom = boundingRect.height - top;
 
             let cursor = "auto";
-            if (top < resizeOffset && left < resizeOffset) cursor = "nw-resize";
+            if (top < resizeOffset && left < resizeOffset)
+                cursor = "nw-resize";
             else if (bottom < resizeOffset && left < resizeOffset)
                 cursor = "sw-resize";
             else if (bottom < resizeOffset && right < resizeOffset)
@@ -197,6 +190,7 @@ const Window = ({
                 left: state.sizes.left,
                 top: state.sizes.top,
                 backgroundColor,
+				zIndex: zIndex
             }}
             onMouseDown={handleMouseDown}
             className={styles["window"]}
