@@ -18,6 +18,24 @@
     }
 }
 
+.cursor-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 214748364;
+}
+
+.window-overlay {
+    cursor: default;
+    position: absolute;
+    top: 30px;
+    left: 6px;
+    height: calc(100% - 36px);
+    width: calc(100% - 12px);
+}
+
 // tmp
 .del-btn {
     position: absolute;

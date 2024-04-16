@@ -18,6 +18,7 @@ const Window = ({
 	children,
 	focus,
 	deleteSelf,
+    focused,
 	zIndex = 1,
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
@@ -158,7 +159,6 @@ const Window = ({
 			setState((prevState) => ({ ...prevState, sizes: newSizes }));
 		}
 	};
-
 	const handleMouseDown = function (event: MouseEvent<HTMLDivElement>) {
         if ((event.target as HTMLDivElement).id != "window")
             return;
@@ -175,7 +175,7 @@ const Window = ({
 	};
 
 	const handleMouseUp = (event: globalThis.MouseEvent) => {
-        if ((event.target as HTMLDivElement).id != "overlay")
+        if ((event.target as HTMLDivElement).id != "cursor-overlay")
             return;
 		setState((prevState) => ({ ...prevState, isDragging: false }));
 	};
@@ -217,18 +217,18 @@ const Window = ({
 			{children}
 			{state.isDragging && (
 				<div
-                    id="overlay"
+                    id="cursor-overlay"
+                    className={styles['cursor-overlay']}
 					style={{
-						position: "fixed",
-						width: "100vw",
-						height: "100vh",
-						top: 0,
-						left: 0,
 						cursor: state.cursor,
-						zIndex: 100,
 					}}
 				></div>
 			)}
+            {!focused && (
+                <div onMouseDown={() => {
+                    focus!()
+                }} className={styles['window-overlay']}></div>
+            )}
 		</div>
 	);
 };

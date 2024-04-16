@@ -9,6 +9,7 @@ export interface WindowProps {
 	minWidth?: number;
 	minHeight?: number;
 	focus?: () => void;
+    focused?: boolean;
 	deleteSelf?: () => void;
 	children?: ReactNode;
 }

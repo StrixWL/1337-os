@@ -17,12 +17,14 @@ interface Windows {
 interface SystemState {
 	currentId: number;
 	currentZIndex: number;
+    focus: number | null;
 }
 
 const StrixOS = () => {
 	const [systemState, setSystemState] = useState<SystemState>({
 		currentZIndex: 1,
 		currentId: 0,
+        focus: null
 	});
 	const [windows, dispatch] = useReducer(
 		(state: Windows, action: WindowsAction): Windows => {
@@ -40,6 +42,7 @@ const StrixOS = () => {
 						...systemState,
 						currentId: systemState.currentId + 1,
 						currentZIndex: systemState.currentZIndex + 1,
+                        focus: systemState.currentId
 					});
 					return newState;
 				case "FOCUS":
@@ -47,6 +50,7 @@ const StrixOS = () => {
 					setSystemState({
 						...systemState,
 						currentZIndex: systemState.currentZIndex + 1,
+                        focus: action.props.id!
 					});
 					return {
 						...state,
@@ -171,6 +175,7 @@ const StrixOS = () => {
 					<Window
 						key={window.id}
 						{...window}
+                        focused={window.id == systemState.focus}
 						focus={() =>
 							dispatch({
 								type: "FOCUS",
