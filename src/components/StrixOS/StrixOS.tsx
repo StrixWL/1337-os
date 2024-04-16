@@ -27,7 +27,7 @@ const StrixOS = () => {
 	const [windows, dispatch] = useReducer(
 		(state: Windows, action: WindowsAction): Windows => {
 			switch (action.type) {
-				case "ADD":
+                case "ADD":
 					const newState = {
 						...state,
 						[systemState.currentId]: {
@@ -43,18 +43,23 @@ const StrixOS = () => {
 					});
 					return newState;
 				case "FOCUS":
-                    const newZIndex = systemState.currentZIndex
-                    setSystemState({
+					const newZIndex = systemState.currentZIndex;
+					setSystemState({
 						...systemState,
 						currentZIndex: systemState.currentZIndex + 1,
 					});
 					return {
-                        ...state,
-                        [action.props.id!]: {
-                            ...state[action.props.id!],
-                            zIndex: newZIndex
-                        }
-                    }
+						...state,
+						[action.props.id!]: {
+							...state[action.props.id!],
+							zIndex: newZIndex,
+						},
+					};
+				case "DELETE":
+                    console.log("deleting", action.props.id!)
+					const _newState = { ...state };
+                    delete _newState[action.props.id!]
+                    return _newState
 			}
 			return { ...state };
 		},
@@ -77,12 +82,26 @@ const StrixOS = () => {
 			>
 				ADD
 			</button>
-			{Object.keys(windows).map((key: string, index: number) => {
+			{Object.keys(windows).map((key: string) => {
 				const window = windows[parseInt(key)];
-				return <Window key={index} {...window} focus={() => dispatch({
-                    type: "FOCUS",
-                    props: {id: window.id}
-                })} />;
+				return (
+					<Window
+						key={window.id}
+						{...window}
+						focus={() =>
+							dispatch({
+								type: "FOCUS",
+								props: { id: window.id },
+							})
+						}
+                        deleteSelf={() =>
+							dispatch({
+								type: "DELETE",
+								props: { id: window.id },
+							})
+						}
+					/>
+				);
 			})}
 			<Desktop />
 			<Taskbar />
