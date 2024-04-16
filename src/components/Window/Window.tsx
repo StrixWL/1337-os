@@ -10,7 +10,6 @@ interface WindowState {
 }
 
 const Window = ({
-    id,
 	backgroundColor = "transparent",
 	resizeOffset = 10,
 	dragOffset = 30,
@@ -22,7 +21,7 @@ const Window = ({
 	zIndex = 1,
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
-		sizes: { width: 200, height: 200, left: 300, top: 200 },
+		sizes: { width: 510, height: 400, left: 300, top: 200 },
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
@@ -215,7 +214,6 @@ const Window = ({
 			>
 				X
 			</button>
-            {id}
 			{children}
 			{state.isDragging && (
 				<div

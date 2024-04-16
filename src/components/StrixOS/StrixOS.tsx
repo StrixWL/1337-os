@@ -27,7 +27,7 @@ const StrixOS = () => {
 	const [windows, dispatch] = useReducer(
 		(state: Windows, action: WindowsAction): Windows => {
 			switch (action.type) {
-                case "ADD":
+				case "ADD":
 					const newState = {
 						...state,
 						[systemState.currentId]: {
@@ -56,10 +56,10 @@ const StrixOS = () => {
 						},
 					};
 				case "DELETE":
-                    console.log("deleting", action.props.id!)
+					console.log("deleting", action.props.id!);
 					const _newState = { ...state };
-                    delete _newState[action.props.id!]
-                    return _newState
+					delete _newState[action.props.id!];
+					return _newState;
 			}
 			return { ...state };
 		},
@@ -75,12 +75,95 @@ const StrixOS = () => {
 					dispatch({
 						type: "ADD",
 						props: {
-                            backgroundColor: 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')'
+							children: (
+								<iframe
+									src="https://mycv.strix.moe/ToF_Clone/"
+									frameBorder="0"
+									title="paint"
+									style={{
+										display: "block",
+										width: "100%",
+										height: "100%",
+										backgroundColor: "white",
+									}}
+								/>
+							),
+							backgroundColor:
+								"rgb(" +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								")",
 						},
 					});
 				}}
 			>
-				ADD
+				ToF
+			</button>
+            <button
+				onClick={() => {
+					dispatch({
+						type: "ADD",
+						props: {
+							children: (
+								<iframe
+									src="https://jspaint.app"
+									frameBorder="0"
+									title="paint"
+									style={{
+										display: "block",
+										width: "100%",
+										height: "100%",
+										backgroundColor: "rgb(192,192,192)",
+									}}
+								/>
+							),
+							backgroundColor:
+								"rgb(" +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								")",
+						},
+					});
+				}}
+			>
+				Paint
+			</button><button
+				onClick={() => {
+					dispatch({
+						type: "ADD",
+						props: {
+							children: (
+								<iframe
+									src="https://react-ecommerce.strix.moe/"
+									frameBorder="0"
+									title="paint"
+									style={{
+										display: "block",
+										width: "100%",
+										height: "100%",
+										backgroundColor: "white",
+									}}
+								/>
+							),
+							backgroundColor:
+								"rgb(" +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								"," +
+								Math.floor(Math.random() * 256) +
+								")",
+						},
+					});
+				}}
+			>
+				Ecommerce
 			</button>
 			{Object.keys(windows).map((key: string) => {
 				const window = windows[parseInt(key)];
@@ -94,7 +177,7 @@ const StrixOS = () => {
 								props: { id: window.id },
 							})
 						}
-                        deleteSelf={() =>
+						deleteSelf={() =>
 							dispatch({
 								type: "DELETE",
 								props: { id: window.id },
