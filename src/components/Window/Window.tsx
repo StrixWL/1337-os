@@ -1,6 +1,7 @@
 import styles from "./Window.module.scss";
 import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { WindowProps } from "../../utils/types";
+import WindowHeader from "./WindowHeader/WindowHeader";
 
 interface WindowState {
 	sizes: { width: number; height: number; left: number; top: number };
@@ -164,22 +165,22 @@ const Window = ({
 		}
 	};
 	const handleMouseDown = function (event: MouseEvent<HTMLDivElement>) {
-        if ((event.target as HTMLDivElement).id != "window")
-            return;
         // focus! >:(
-		focus!();
+        focus!();
+        if ((event.target as HTMLDivElement).id == "window-control-btn")
+            return;
         const time = (new Date()).getTime()
         const delta = time - state.lastMouseDownTime
-		setState({
-			...state,
+		setState((prevState) => ({
+			...prevState,
 			isDragging: true,
 			startDrag: {
 				x: event.clientX,
 				y: event.clientY,
 			},
-            maximized: delta < 250 ? !state.maximized : state.maximized,
+            maximized: delta < 250 ? !prevState.maximized : prevState.maximized,
             lastMouseDownTime: time
-		});
+		}));
 	};
 
 	const handleMouseUp = (event: globalThis.MouseEvent) => {
@@ -212,24 +213,7 @@ const Window = ({
 			onMouseDown={handleMouseDown}
 			className={styles["window"]}
 		>
-			<button
-				className={styles["maximize-btn"]}
-				onClick={() => {
-					console.log("maximizing");
-					setState({...state, maximized: !state.maximized})
-				}}
-			>
-				❐
-			</button>
-			<button
-				className={styles["del-btn"]}
-				onClick={() => {
-					console.log("deleting self");
-					deleteSelf!();
-				}}
-			>
-				X
-			</button>
+            <WindowHeader close={() => deleteSelf!()} maximize={() => setState({...state, maximized: !state.maximized})}/>
 			{children}
 			{state.isDragging && (
 				<div

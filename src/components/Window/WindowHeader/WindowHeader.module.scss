@@ -1,0 +1,52 @@
+.window-header {
+	position: absolute;
+	top: 2px;
+	left: 4px;
+	height: 20px;
+	background-color: #000080;
+	width: calc(100% - 8px);
+	color: white;
+	display: flex;
+	h1 {
+		font-size: 12px;
+		font-family: Tahoma;
+		font-family: "Noto Sans";
+		font-weight: 600;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: 1px;
+		text-wrap: nowrap;
+	}
+	img {
+		padding: 2px 0;
+	}
+}
+button:focus {
+	outline: none;
+}
+.window-control {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	button {
+		margin: 2px 2px 2px 0;
+		width: 14px;
+		height: 13.5px;
+		background: #c0c0c0;
+		border-width: 1px;
+		border-color: #ffffff #808080 #808080 #ffffff;
+		background-image: url("../../../assets/window-control.png");
+		background-repeat: no-repeat;
+	}
+    .minimize-btn {
+		background-position: calc(-13.5px * 0) 1px;
+    }
+    .maximize-btn {
+        background-position: calc(-13.5px * 1) 1px;
+    }
+    .close-btn {
+        background-position: calc(-13.5px * 3) 1px;
+    }
+}

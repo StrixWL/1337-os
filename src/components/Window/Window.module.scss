@@ -1,12 +1,9 @@
 .window {
     position: absolute;
-    // left: 40%;
-    // top: 40%;
-    // width: 200px;
-    // height: 200px;
     overflow: hidden;
-    padding: 30px 4px 5px 4px;
-    border-radius: 5px;
+    padding: 25px 4px 5px 4px;
+    border: 2px solid #424242;
+    border-color: #fff #424242 #424242 #fff;
     &::after {
         content: '';
         position: absolute;

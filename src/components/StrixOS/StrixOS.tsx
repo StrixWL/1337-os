@@ -92,14 +92,7 @@ const StrixOS = () => {
 									}}
 								/>
 							),
-							backgroundColor:
-								"rgb(" +
-								Math.floor(Math.random() * 256) +
-								"," +
-								Math.floor(Math.random() * 256) +
-								"," +
-								Math.floor(Math.random() * 256) +
-								")",
+							backgroundColor: "#C0C0C0"
 						},
 					});
 				}}
@@ -124,14 +117,7 @@ const StrixOS = () => {
 									}}
 								/>
 							),
-							backgroundColor:
-								"rgb(" +
-								Math.floor(Math.random() * 256) +
-								"," +
-								Math.floor(Math.random() * 256) +
-								"," +
-								Math.floor(Math.random() * 256) +
-								")",
+							backgroundColor: "#C0C0C0"
 						},
 					});
 				}}
