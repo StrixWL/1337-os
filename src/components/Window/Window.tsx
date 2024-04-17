@@ -7,11 +7,12 @@ interface WindowState {
 	startDrag: { x: number; y: number };
 	isDragging: boolean;
 	cursor: string;
+    maximized: boolean
 }
 
 const Window = ({
 	backgroundColor = "transparent",
-	resizeOffset = 10,
+	resizeOffset = 5,
 	dragOffset = 30,
 	minWidth = 200,
 	minHeight = 200,
@@ -26,6 +27,7 @@ const Window = ({
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
+        maximized: false
 	});
 	const ref = useRef<HTMLDivElement>(null);
 	const handleMouseMove = (event: globalThis.MouseEvent) => {
@@ -188,23 +190,31 @@ const Window = ({
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
 	}, [state.isDragging]);
-
 	return (
 		<div
 			id="window"
 			ref={ref}
 			style={{
 				cursor: state.cursor,
-				width: state.sizes.width,
-				height: state.sizes.height,
-				left: state.sizes.left,
-				top: state.sizes.top,
+				height: state.maximized ? 'calc(100% - 24px)' : state.sizes.height,
+				width: state.maximized ? 'calc(100% - 0px)' : state.sizes.width,
+				left: state.maximized ? '-4px' : state.sizes.left,
+				top: state.maximized ? '-6px' : state.sizes.top,
 				backgroundColor,
 				zIndex: zIndex,
 			}}
 			onMouseDown={handleMouseDown}
 			className={styles["window"]}
 		>
+			<button
+				className={styles["maximize-btn"]}
+				onClick={() => {
+					console.log("maximizing");
+					setState({...state, maximized: !state.maximized})
+				}}
+			>
+				❐
+			</button>
 			<button
 				className={styles["del-btn"]}
 				onClick={() => {
@@ -218,16 +228,19 @@ const Window = ({
 			{state.isDragging && (
 				<div
                     id="cursor-overlay"
-                    className={styles['cursor-overlay']}
+					className={styles["cursor-overlay"]}
 					style={{
 						cursor: state.cursor,
 					}}
 				></div>
 			)}
             {!focused && (
-                <div onMouseDown={() => {
-                    focus!()
-                }} className={styles['window-overlay']}></div>
+				<div
+					onMouseDown={() => {
+						focus!();
+					}}
+					className={styles["window-overlay"]}
+				></div>
             )}
 		</div>
 	);

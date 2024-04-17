@@ -1,5 +1,5 @@
 .window {
-    position: fixed;
+    position: absolute;
     // left: 40%;
     // top: 40%;
     // width: 200px;
@@ -37,8 +37,15 @@
 }
 
 // tmp
-.del-btn {
+.del-btn, .maximize-btn {
     position: absolute;
     right: 4px;
     top: 4px;
+}
+
+.maximize-btn {
+    right: 34px;
+    font-size: 13px;
+    padding: 0;
+    width: 25px;
 }

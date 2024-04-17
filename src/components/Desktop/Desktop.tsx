@@ -1,8 +1,14 @@
+import { ReactNode } from 'react';
 import styles from './Desktop.module.scss';
 
-const Desktop = () => {
+interface Desktop {
+    children?: ReactNode
+}
+
+const Desktop = ({children}: Desktop) => {
     return (
         <div className={styles['Desktop']}>
+            {children}
         </div>
     );
 };
