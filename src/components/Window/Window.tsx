@@ -1,5 +1,5 @@
 import styles from "./Window.module.scss";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { WindowProps } from "../../utils/types";
 
 interface WindowState {
@@ -7,7 +7,8 @@ interface WindowState {
 	startDrag: { x: number; y: number };
 	isDragging: boolean;
 	cursor: string;
-    maximized: boolean
+    maximized: boolean;
+    lastMouseDownTime: number;
 }
 
 const Window = ({
@@ -27,7 +28,8 @@ const Window = ({
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
-        maximized: false
+        maximized: false,
+        lastMouseDownTime: 0
 	});
 	const ref = useRef<HTMLDivElement>(null);
 	const handleMouseMove = (event: globalThis.MouseEvent) => {
@@ -166,14 +168,18 @@ const Window = ({
             return;
         // focus! >:(
 		focus!();
-		setState((prevState) => ({
-			...prevState,
+        const time = (new Date()).getTime()
+        const delta = time - state.lastMouseDownTime
+		setState({
+			...state,
 			isDragging: true,
 			startDrag: {
 				x: event.clientX,
 				y: event.clientY,
 			},
-		}));
+            maximized: delta < 250 ? !state.maximized : state.maximized,
+            lastMouseDownTime: time
+		});
 	};
 
 	const handleMouseUp = (event: globalThis.MouseEvent) => {
