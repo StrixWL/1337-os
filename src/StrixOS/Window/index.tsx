@@ -18,7 +18,7 @@ const Window = ({
 	dragOffset = 30,
 	minWidth = 200,
 	minHeight = 200,
-	children,
+	component,
 	focus,
 	deleteSelf,
     focused,
@@ -214,7 +214,7 @@ const Window = ({
 			className={styles["window"]}
 		>
             <WindowHeader close={() => deleteSelf!()} maximize={() => setState({...state, maximized: !state.maximized})}/>
-			{children}
+			{component}
 			{state.isDragging && (
 				<div
                     id="cursor-overlay"

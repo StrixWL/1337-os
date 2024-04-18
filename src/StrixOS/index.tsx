@@ -3,6 +3,7 @@ import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
 import { WindowProps } from "../utils/types";
+import { Paint, ToF } from "../apps";
 
 interface WindowsAction {
 	type: string;
@@ -72,21 +73,7 @@ const StrixOS = () => {
 				onClick={() => {
 					dispatch({
 						type: "ADD",
-						props: {
-							children: (
-								<iframe
-									src="https://mycv.strix.moe/ToF_Clone/"
-									frameBorder="0"
-									title="paint"
-									style={{
-										display: "block",
-										width: "100%",
-										height: "100%",
-										backgroundColor: "white",
-									}}
-								/>
-							),
-						},
+						props: ToF,
 					});
 				}}
 			>
@@ -96,21 +83,7 @@ const StrixOS = () => {
 				onClick={() => {
 					dispatch({
 						type: "ADD",
-						props: {
-							children: (
-								<iframe
-									src="https://jspaint.app"
-									frameBorder="0"
-									title="paint"
-									style={{
-										display: "block",
-										width: "100%",
-										height: "100%",
-										backgroundColor: "rgb(192,192,192)",
-									}}
-								/>
-							),
-						},
+						props: Paint,
 					});
 				}}
 			>
