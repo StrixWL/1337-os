@@ -1,7 +1,7 @@
 import styles from "./Window.module.scss";
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { WindowProps } from "../../utils/types";
-import WindowHeader from "./WindowHeader/WindowHeader";
+import WindowHeader from "./WindowHeader";
 
 interface WindowState {
 	sizes: { width: number; height: number; left: number; top: number };
@@ -13,7 +13,7 @@ interface WindowState {
 }
 
 const Window = ({
-	backgroundColor = "transparent",
+	backgroundColor = "#C0C0C0",
 	resizeOffset = 5,
 	dragOffset = 30,
 	minWidth = 200,

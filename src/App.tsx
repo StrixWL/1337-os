@@ -1,4 +1,4 @@
-import StrixOS from "./components/StrixOS/StrixOS";
+import StrixOS from "./StrixOS";
 
 function App() {
   return (

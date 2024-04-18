@@ -1,9 +1,8 @@
-import { useEffect, useReducer, useState } from "react";
-import Desktop from "../Desktop/Desktop";
-import Taskbar from "../Taskbar/Taskbar";
-import Window from "../Window/Window";
-import styles from "./StrixOS.module.scss";
-import { WindowProps } from "../../utils/types";
+import { useEffect, useReducer } from "react";
+import Desktop from "./Desktop";
+import Taskbar from "./Taskbar";
+import Window from "./Window";
+import { WindowProps } from "../utils/types";
 
 interface WindowsAction {
 	type: string;
@@ -12,68 +11,63 @@ interface WindowsAction {
 
 interface Windows {
 	[key: number]: WindowProps;
-}
-
-interface SystemState {
 	currentId: number;
 	currentZIndex: number;
 	focus: number | null;
 }
 
+const reducer = (state: Windows, action: WindowsAction): Windows => {
+	switch (action.type) {
+		case "ADD":
+			const newState = {
+				...state,
+				currentId: state.currentId + 1,
+				currentZIndex: state.currentZIndex + 1,
+				focus: state.currentId,
+				[state.currentId]: {
+					...action.props,
+					zIndex: state.currentZIndex,
+					id: state.currentId,
+				},
+			};
+			return newState;
+		case "FOCUS":
+			const newZIndex = state.currentZIndex;
+			return {
+				...state,
+				currentZIndex: state.currentZIndex + 1,
+				focus: action.props.id!,
+				[action.props.id!]: {
+					...state[action.props.id!],
+					zIndex: newZIndex,
+				},
+			};
+		case "DELETE":
+			console.log("deleting", action.props.id!);
+			const _newState = { ...state };
+			delete _newState[action.props.id!];
+			return _newState;
+	}
+	return { ...state };
+}
+
 const StrixOS = () => {
-	const [systemState, setSystemState] = useState<SystemState>({
-		currentZIndex: 1,
-		currentId: 0,
-		focus: null,
-	});
-	const [windows, dispatch] = useReducer(
-		(state: Windows, action: WindowsAction): Windows => {
-			switch (action.type) {
-				case "ADD":
-					const newState = {
-						...state,
-						[systemState.currentId]: {
-							...action.props,
-							zIndex: systemState.currentZIndex,
-							id: systemState.currentId,
-						},
-					};
-					setSystemState({
-						...systemState,
-						currentId: systemState.currentId + 1,
-						currentZIndex: systemState.currentZIndex + 1,
-						focus: systemState.currentId,
-					});
-					return newState;
-				case "FOCUS":
-					const newZIndex = systemState.currentZIndex;
-					setSystemState({
-						...systemState,
-						currentZIndex: systemState.currentZIndex + 1,
-						focus: action.props.id!,
-					});
-					return {
-						...state,
-						[action.props.id!]: {
-							...state[action.props.id!],
-							zIndex: newZIndex,
-						},
-					};
-				case "DELETE":
-					console.log("deleting", action.props.id!);
-					const _newState = { ...state };
-					delete _newState[action.props.id!];
-					return _newState;
-			}
-			return { ...state };
-		},
-		{}
+	const [windows, dispatch] = useReducer(reducer,
+		{
+			currentZIndex: 1,
+			currentId: 0,
+			focus: null,
+		}
 	);
 	useEffect(() => {
 		console.log(windows);
 	}, [windows]);
 	return (
-		<div className={styles["StrixOS"]}>
+		<div style={{
+			height: '100vh',
+			display: 'flex',
+			flexDirection: 'column'
+		}}>
 			<button
 				onClick={() => {
 					dispatch({
@@ -92,7 +86,6 @@ const StrixOS = () => {
 									}}
 								/>
 							),
-							backgroundColor: "#C0C0C0"
 						},
 					});
 				}}
@@ -117,7 +110,6 @@ const StrixOS = () => {
 									}}
 								/>
 							),
-							backgroundColor: "#C0C0C0"
 						},
 					});
 				}}
@@ -127,11 +119,13 @@ const StrixOS = () => {
 			<Desktop>
 				{Object.keys(windows).map((key: string) => {
 					const window = windows[parseInt(key)];
+					if (!window)
+						return null;
 					return (
 						<Window
 							key={window.id}
 							{...window}
-							focused={window.id == systemState.focus}
+							focused={window.id == windows.focus}
 							focus={() =>
 								dispatch({
 									type: "FOCUS",
