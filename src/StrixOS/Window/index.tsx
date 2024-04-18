@@ -204,8 +204,8 @@ const Window = ({
 			style={{
 				cursor: state.cursor,
 				height: state.maximized ? 'calc(100% - 24px)' : state.sizes.height,
-				width: state.maximized ? 'calc(100% - 0px)' : state.sizes.width,
-				left: state.maximized ? '-4px' : state.sizes.left,
+				width: state.maximized ? 'calc(100% + 2px)' : state.sizes.width,
+				left: state.maximized ? '-6px' : state.sizes.left,
 				top: state.maximized ? '-6px' : state.sizes.top,
 				backgroundColor,
 				zIndex: zIndex,
