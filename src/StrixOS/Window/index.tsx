@@ -23,6 +23,8 @@ const Window = ({
 	deleteSelf,
     focused,
 	zIndex = 1,
+	icon = null,
+	title = ""
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
 		sizes: { width: 510, height: 400, left: 300, top: 200 },
@@ -213,7 +215,14 @@ const Window = ({
 			onMouseDown={handleMouseDown}
 			className={styles["window"]}
 		>
-            <WindowHeader close={() => deleteSelf!()} maximize={() => setState({...state, maximized: !state.maximized})}/>
+            <WindowHeader
+				close={() => deleteSelf!()}
+				maximize={() =>
+					setState({ ...state, maximized: !state.maximized })
+				}
+				icon={icon}
+				title={title}
+			/>
 			{component}
 			{state.isDragging && (
 				<div

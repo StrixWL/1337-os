@@ -11,5 +11,7 @@ export interface WindowProps {
 	focus?: () => void;
     focused?: boolean;
 	deleteSelf?: () => void;
+	icon?: ReactNode;
+	title?: string;
 	component?: ReactNode;
 }
