@@ -1,11 +1,11 @@
 import styles from "./Window.module.scss";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-import { WindowProps } from "../../utils/types";
+import { WindowProps, Sizes, Pos } from "../../utils/types";
 import WindowHeader from "./WindowHeader";
 
 interface WindowState {
-	sizes: { width: number; height: number; left: number; top: number };
-	startDrag: { x: number; y: number };
+	sizes: Sizes;
+	startDrag: Pos;
 	isDragging: boolean;
 	cursor: string;
     maximized: boolean;

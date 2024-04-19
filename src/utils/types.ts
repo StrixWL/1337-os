@@ -1,5 +1,17 @@
 import { ReactNode } from "react";
 
+export interface Pos {
+	x: number;
+	y: number;
+}
+
+export interface Sizes {
+	left: number;
+	top: number;
+	width: number;
+	height: number;
+}
+
 export interface WindowProps {
 	id?: number;
 	zIndex?: number;
