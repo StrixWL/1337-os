@@ -12,6 +12,12 @@ export interface Sizes {
 	height: number;
 }
 
+export interface DragState {
+	startPos: Pos;
+	endPos: Pos;
+	isDragging: boolean;
+}
+
 export interface WindowProps {
 	id?: number;
 	zIndex?: number;
