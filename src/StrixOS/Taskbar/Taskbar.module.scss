@@ -1,6 +1,45 @@
+@font-face {
+	font-family: "Windows Regular";
+	src: url("../../assets/fonts/Windows\ Regular.ttf") format("truetype");
+}
+$font-main: "Windows Regular";
+
 .Taskbar {
-    height: 38px;
-    background: linear-gradient(to bottom right, #121213, #232325);
-    background: #C0C0C0;
-    border-top: 3px solid #DFDFDF;
+	height: 38px;
+	background: linear-gradient(to bottom right, #121213, #232325);
+	background: #c0c0c0;
+	border-top: 3px solid #dfdfdf;
+	display: flex;
+}
+
+.start {
+	margin: 2px 2px 2px 4px;
+	height: 30px;
+	background: #c0c0c0;
+	border-width: 2px;
+	border-top-width: 3px;
+	border-left-width: 3px;
+	border-color: #ffffff #808080 #808080 #ffffff;
+	background-image: url("../../../assets/window-control.png");
+	background-repeat: no-repeat;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	font-size: 20px;
+	letter-spacing: 1px;
+	font-weight: bold;
+	font-family: $font-main;
+	&:active {
+		outline-style: none;
+		border-color: white;
+        border-top-color: #808080c6;
+        border-left-color: #808080c6;
+        position: relative;
+        top: 1px;
+        left: 1px;
+	}
+
+	img {
+		height: 80%;
+	}
 }
