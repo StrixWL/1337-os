@@ -1,0 +1,35 @@
+.desktop-shortcut {
+	display: flex;
+	flex-direction: column;
+	width: 40px;
+	justify-content: center;
+	align-items: center;
+	font-family: "Windows Regular";
+	color: white;
+	font-size: 12px;
+	position: absolute;
+	padding: 10px;
+	border-radius: 5px;
+	&:hover {
+		// background-color: rgba(173, 216, 230, 0.733);
+	}
+	span {
+		padding: 0 3px;
+	}
+}
+
+.shortcut-icon {
+    position: relative;
+	mask-image: url("/src/assets/paint.png");
+	mask-repeat: no-repeat;
+	&.active::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: blue;
+		width: 100%;
+		height: 100%;
+		opacity: 0.3;
+	}
+}

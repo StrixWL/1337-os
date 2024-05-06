@@ -95,6 +95,13 @@ const useSelectionBox = () => {
 		}
 	};
 	const mouseDownHandler = (event: MouseEvent<HTMLDivElement>) => {
+		if ((event.target as HTMLDivElement).classList.contains("shortcut")) {
+			setDragState({
+				...dragState,
+				isDragging: false
+			});
+			return;
+		}
 		if ((event.target as HTMLDivElement).id != "desktop") return;
 		const boundingRect = ref.current!.getBoundingClientRect();
 		var posX = event.clientX + window.scrollX - boundingRect.left;
@@ -120,7 +127,7 @@ const SelectionBox = ({ dragState, sizes }: SelectionBoxProps) => {
 	return (
 		<>
 			{dragState.isDragging && (
-				<div>
+				<div id="selection-box">
 					{sizes.height > 1 && sizes.width > 1 && (
 						<div
 							style={{
