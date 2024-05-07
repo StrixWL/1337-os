@@ -36,10 +36,10 @@ const DesktopShortCut = ({
 				bottom: sizes.top + sizes.height,
 			};
 			const rect2 = {
-				left: left,
-				right: left + 60,
+				left: left + 5,
+				right: left + 72,
 				top: top,
-				bottom: top + 72,
+				bottom: top + 80,
 			};
 			const horizontalIntersect =
 				box.left < rect2.right && box.right > rect2.left;
