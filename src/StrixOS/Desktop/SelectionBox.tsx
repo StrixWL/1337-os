@@ -4,12 +4,12 @@ import { MouseEvent, useRef, useState, useEffect } from "react";
 
 interface SelectionBoxProps {
 	sizes: Sizes;
-	dragState: DragState;
+	boxDragState: DragState;
 }
 
 const useSelectionBox = () => {
 	const ref = useRef<HTMLDivElement>(null);
-	const [dragState, setDragState] = useState<DragState>({
+	const [boxDragState, setDragState] = useState<DragState>({
 		startPos: { x: 0, y: 0 },
 		endPos: { x: 0, y: 0 },
 		isDragging: false,
@@ -27,37 +27,37 @@ const useSelectionBox = () => {
 			width: 0,
 			height: 0,
 		};
-		if (dragState.startPos.x <= dragState.endPos.x) {
-			if (dragState.startPos.y <= dragState.endPos.y) {
+		if (boxDragState.startPos.x <= boxDragState.endPos.x) {
+			if (boxDragState.startPos.y <= boxDragState.endPos.y) {
 				// bottom right
-				sizes.left = dragState.startPos.x;
-				sizes.top = dragState.startPos.y;
-				sizes.width = dragState.endPos.x - dragState.startPos.x;
-				sizes.height = dragState.endPos.y - dragState.startPos.y;
+				sizes.left = boxDragState.startPos.x;
+				sizes.top = boxDragState.startPos.y;
+				sizes.width = boxDragState.endPos.x - boxDragState.startPos.x;
+				sizes.height = boxDragState.endPos.y - boxDragState.startPos.y;
 			} else {
 				// top right
-				sizes.left = dragState.startPos.x;
-				sizes.top = dragState.endPos.y;
-				sizes.width = dragState.endPos.x - dragState.startPos.x;
-				sizes.height = dragState.startPos.y - dragState.endPos.y;
+				sizes.left = boxDragState.startPos.x;
+				sizes.top = boxDragState.endPos.y;
+				sizes.width = boxDragState.endPos.x - boxDragState.startPos.x;
+				sizes.height = boxDragState.startPos.y - boxDragState.endPos.y;
 			}
 		} else {
-			if (dragState.startPos.y < dragState.endPos.y) {
+			if (boxDragState.startPos.y < boxDragState.endPos.y) {
 				// bottom left
-				sizes.left = dragState.endPos.x;
-				sizes.top = dragState.startPos.y;
-				sizes.width = dragState.startPos.x - dragState.endPos.x;
-				sizes.height = dragState.endPos.y - dragState.startPos.y;
+				sizes.left = boxDragState.endPos.x;
+				sizes.top = boxDragState.startPos.y;
+				sizes.width = boxDragState.startPos.x - boxDragState.endPos.x;
+				sizes.height = boxDragState.endPos.y - boxDragState.startPos.y;
 			} else {
 				// top left
-				sizes.left = dragState.endPos.x;
-				sizes.top = dragState.endPos.y;
-				sizes.width = dragState.startPos.x - dragState.endPos.x;
-				sizes.height = dragState.startPos.y - dragState.endPos.y;
+				sizes.left = boxDragState.endPos.x;
+				sizes.top = boxDragState.endPos.y;
+				sizes.width = boxDragState.startPos.x - boxDragState.endPos.x;
+				sizes.height = boxDragState.startPos.y - boxDragState.endPos.y;
 			}
 		}
 		setSizes(sizes);
-	}, [dragState]);
+	}, [boxDragState]);
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
 		window.addEventListener("mousemove", handleMouseMove);
@@ -65,10 +65,10 @@ const useSelectionBox = () => {
 			window.removeEventListener("mouseup", handleMouseUp);
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
-	}, [dragState]);
+	}, [boxDragState]);
 	const handleMouseUp = () => {
 		setDragState({
-			...dragState,
+			...boxDragState,
 			isDragging: false,
 			startPos: { x: 0, y: 0 },
 			endPos: { x: 0, y: 0 },
@@ -84,9 +84,9 @@ const useSelectionBox = () => {
 		const boundingRect = ref.current!.getBoundingClientRect();
 		var posX = event.clientX + window.scrollX - boundingRect.left;
 		var posY = event.clientY + window.scrollY - boundingRect.top;
-		if (dragState.isDragging) {
+		if (boxDragState.isDragging) {
 			setDragState({
-				...dragState,
+				...boxDragState,
 				endPos: {
 					x: posX,
 					y: posY,
@@ -97,7 +97,7 @@ const useSelectionBox = () => {
 	const mouseDownHandler = (event: MouseEvent<HTMLDivElement>) => {
 		if ((event.target as HTMLDivElement).classList.contains("shortcut")) {
 			setDragState({
-				...dragState,
+				...boxDragState,
 				isDragging: false
 			});
 			return;
@@ -107,7 +107,7 @@ const useSelectionBox = () => {
 		var posX = event.clientX + window.scrollX - boundingRect.left;
 		var posY = event.clientY + window.scrollY - boundingRect.top;
 		setDragState({
-			...dragState,
+			...boxDragState,
 			isDragging: true,
 			startPos: {
 				x: posX,
@@ -120,13 +120,13 @@ const useSelectionBox = () => {
 		});
 	};
 
-	return { ref, mouseDownHandler, dragState, sizes };
+	return { ref, mouseDownHandler, boxDragState, sizes };
 }
 
-const SelectionBox = ({ dragState, sizes }: SelectionBoxProps) => {
+const SelectionBox = ({ boxDragState, sizes }: SelectionBoxProps) => {
 	return (
 		<>
-			{dragState.isDragging && (
+			{boxDragState.isDragging && (
 				<div id="selection-box">
 					{sizes.height > 1 && sizes.width > 1 && (
 						<div

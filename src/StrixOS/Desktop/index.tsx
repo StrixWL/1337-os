@@ -9,7 +9,7 @@ interface Desktop {
 }
 
 const Desktop = ({ children }: Desktop) => {
-	const { ref, mouseDownHandler, dragState, sizes } = useSelectionBox();
+	const { ref, mouseDownHandler, boxDragState, sizes } = useSelectionBox();
 	const [shortCuts, setShortCuts] = useState([
 		{ name: "Paint", icon: paintIcon, top: 100, left: 100, selected: false },
 		{ name: "Paint", icon: paintIcon, top: 200, left: 200, selected: false },
@@ -45,6 +45,7 @@ const Desktop = ({ children }: Desktop) => {
 					selected={shortcut.selected}
 				/>
 			))}
+			<SelectionBox boxDragState={boxDragState} sizes={sizes} />
 			{children}
 		</div>
 	);
