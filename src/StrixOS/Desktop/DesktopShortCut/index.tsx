@@ -26,6 +26,7 @@ const DesktopShortCut = ({
 	setScDragState,
 }: DesktopShortCut) => {
 	const ref = useRef<HTMLDivElement>(null);
+	const [mouseDownTime, setMouseDownTime] = useState(0)
 	useEffect(() => {
 		const selectionBox = document.getElementById("selection-box");
 		if (selectionBox) {
@@ -63,12 +64,15 @@ const DesktopShortCut = ({
 			},
 			isDragging: true,
 		});
+		setMouseDownTime((new Date()).getTime())
 	};
 	return (
 		<div
 			onMouseDown={handleMouseDown}
-			onClickCapture={(event) => {
-				setSelectedAlone();
+			onMouseUp={() => {
+				const deltaT = (new Date()).getTime() - mouseDownTime
+				if (deltaT < 250)
+					setSelectedAlone()
 			}}
 			ref={ref}
 			style={{
