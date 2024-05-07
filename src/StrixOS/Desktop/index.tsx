@@ -3,17 +3,83 @@ import styles from "./Desktop.module.scss";
 import { SelectionBox, useSelectionBox } from "./SelectionBox";
 import DesktopShortCut from "./DesktopShortCut";
 import paintIcon from "../../assets/paint.png";
+import tofIcon from "../../assets/tof.png";
+import { DragState } from "../../utils/types";
 
 interface Desktop {
 	children?: ReactNode;
 }
 
+// sc = shortcut
 const Desktop = ({ children }: Desktop) => {
 	const { ref, mouseDownHandler, boxDragState, sizes } = useSelectionBox();
+	const [scDragState, setScDragState] = useState<DragState>({
+		startPos: {
+			x: 0,
+			y: 0,
+		},
+		endPos: {
+			x: 0,
+			y: 0,
+		},
+		isDragging: false,
+	});
 	const [shortCuts, setShortCuts] = useState([
-		{ name: "Paint", icon: paintIcon, top: 100, left: 100, selected: false },
-		{ name: "Paint", icon: paintIcon, top: 200, left: 200, selected: false },
+		{
+			name: "Paint",
+			icon: paintIcon,
+			top: 100,
+			left: 100,
+			selected: false,
+		},
+		{
+			name: "Tower Of Fantasy",
+			icon: tofIcon,
+			top: 200,
+			left: 200,
+			selected: false,
+		},
+		{
+			name: "Paint",
+			icon: paintIcon,
+			top: 200,
+			left: 400,
+			selected: false,
+		},
 	]);
+	useEffect(() => {
+		window.addEventListener("mouseup", handleMouseUp);
+		window.addEventListener("mousemove", handleMouseMove);
+		return () => {
+			window.removeEventListener("mouseup", handleMouseUp);
+			window.removeEventListener("mousemove", handleMouseMove);
+		};
+	}, [scDragState.isDragging]);
+
+	const handleMouseUp = () => {
+		setScDragState((prevState) => ({
+			...prevState,
+			isDragging: false,
+		}));
+	};
+
+	const handleMouseMove = (event: globalThis.MouseEvent) => {
+		if (scDragState.isDragging) {
+			let hDrag = event.clientX - scDragState.startPos.x;
+			let vDrag = event.clientY - scDragState.endPos.y;
+
+			let _shortCuts = shortCuts.map((shortcut) => {
+				const _shortcut = { ...shortcut };
+				if (_shortcut.selected) {
+					_shortcut.left = _shortcut.left + hDrag;
+					_shortcut.top = _shortcut.top + vDrag;
+				}
+				return _shortcut;
+			});
+			setShortCuts(_shortCuts);
+		}
+	};
+
 	return (
 		<div
 			id="desktop"
@@ -21,28 +87,27 @@ const Desktop = ({ children }: Desktop) => {
 			onMouseDown={mouseDownHandler}
 			className={styles["Desktop"]}
 		>
-			<SelectionBox dragState={dragState} sizes={sizes} />
 			{shortCuts.map((shortcut, index) => (
 				<DesktopShortCut
 					key={index}
 					name={shortcut.name}
 					icon={shortcut.icon}
 					sizes={sizes}
-					dragState={dragState}
 					top={shortcut.top}
 					left={shortcut.left}
 					setSelected={(selected) => {
-						const _shortCuts = [...shortCuts]
-						_shortCuts[index].selected = selected
+						const _shortCuts = [...shortCuts];
+						_shortCuts[index].selected = selected;
 					}}
 					setSelectedAlone={() => {
 						const _shortCuts = shortCuts.map((shortcut) => {
-							shortcut.selected = false
-							return shortcut
-						})
-						_shortCuts[index].selected = true
+							shortcut.selected = false;
+							return shortcut;
+						});
+						_shortCuts[index].selected = true;
 					}}
 					selected={shortcut.selected}
+					setScDragState={setScDragState}
 				/>
 			))}
 			<SelectionBox boxDragState={boxDragState} sizes={sizes} />

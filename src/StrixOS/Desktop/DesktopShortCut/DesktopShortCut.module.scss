@@ -1,7 +1,6 @@
 .desktop-shortcut {
 	display: flex;
 	flex-direction: column;
-	width: 40px;
 	justify-content: center;
 	align-items: center;
 	font-family: "Windows Regular";
@@ -9,18 +8,21 @@
 	font-size: 12px;
 	position: absolute;
 	padding: 10px;
-	border-radius: 5px;
+	img {
+		width: 32px;
+	}
 	&:hover {
 		// background-color: rgba(173, 216, 230, 0.733);
 	}
 	span {
 		padding: 0 3px;
+		font-family: sans-serif;
 	}
 }
 
 .shortcut-icon {
-    position: relative;
-	mask-image: url("/src/assets/paint.png");
+	position: relative;
+	mask-size: contain;
 	mask-repeat: no-repeat;
 	&.active::after {
 		content: "";

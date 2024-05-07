@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import styles from "./DesktopShortCut.module.scss";
 import { DragState, Sizes } from "../../../utils/types";
 
@@ -8,10 +8,10 @@ interface DesktopShortCut {
 	sizes: Sizes;
 	left: number;
 	top: number;
-	dragState: DragState;
-	setSelected: ((selected: boolean) => void);
-	setSelectedAlone: (() => void); // sets shortcut selected and remove all other shortcuts
-	selected: boolean
+	setSelected: (selected: boolean) => void;
+	setSelectedAlone: () => void; // sets shortcut selected and remove all other shortcuts
+	selected: boolean;
+	setScDragState: (state: DragState) => void;
 }
 
 const DesktopShortCut = ({
@@ -20,15 +20,11 @@ const DesktopShortCut = ({
 	sizes,
 	top,
 	left,
-	dragState,
 	setSelected,
 	setSelectedAlone,
-	selected
+	selected,
+	setScDragState,
 }: DesktopShortCut) => {
-	const [state, setState] = useState({
-		left,
-		top,
-	});
 	const ref = useRef<HTMLDivElement>(null);
 	useEffect(() => {
 		const selectionBox = document.getElementById("selection-box");
@@ -40,32 +36,44 @@ const DesktopShortCut = ({
 				bottom: sizes.top + sizes.height,
 			};
 			const rect2 = {
-				left: state.left,
-				right: state.left + 60,
-				top: state.top,
-				bottom: state.top + 72,
+				left: left,
+				right: left + 60,
+				top: top,
+				bottom: top + 72,
 			};
 			const horizontalIntersect =
 				box.left < rect2.right && box.right > rect2.left;
 			const verticalIntersect =
 				box.top < rect2.bottom && box.bottom > rect2.top;
-			setSelected(horizontalIntersect && verticalIntersect)
+			setSelected(horizontalIntersect && verticalIntersect);
 		}
 	}, [sizes]);
+
+	const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
+		event.preventDefault();
+		if (!selected) setSelectedAlone();
+		setScDragState({
+			startPos: {
+				x: event.clientX,
+				y: event.clientY,
+			},
+			endPos: {
+				x: event.clientX,
+				y: event.clientY,
+			},
+			isDragging: true,
+		});
+	};
 	return (
 		<div
-			onMouseDown={(event) => {
-				event.preventDefault();
-				if (!selected)
-					setSelectedAlone()
-			}}
-			onClick={(event) => {
-				setSelectedAlone()
+			onMouseDown={handleMouseDown}
+			onClickCapture={(event) => {
+				setSelectedAlone();
 			}}
 			ref={ref}
 			style={{
-				left: state.left,
-				top: state.top,
+				left: left,
+				top: top,
 			}}
 			className={`${styles["desktop-shortcut"]} shortcut`}
 		>
@@ -74,6 +82,9 @@ const DesktopShortCut = ({
 					styles["shortcut-icon"] +
 					(selected ? " " + styles["active"] : "")
 				}
+				style={{
+					maskImage: `url(${icon})`,
+				}}
 			>
 				<img className="shortcut" src={icon} />
 			</div>
