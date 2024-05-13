@@ -43,3 +43,25 @@ $font-main: "w95fa";
 		height: 80%;
 	}
 }
+
+.system-tray {
+	font-family: $font-main;
+	text-wrap: nowrap;
+	margin: 3px;
+	margin-top: 2px;
+	border: 2px solid white;
+	border-top-color: #808080;
+	border-left-color: #808080;
+	min-width: 84px;
+}
+
+.time {
+	margin: 5px 14px;
+	position: relative;
+	top: 2px;
+}
+
+.opened-windows {
+	width: 100%;
+	height: 100%;
+}
