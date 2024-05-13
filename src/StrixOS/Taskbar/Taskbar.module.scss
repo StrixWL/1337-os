@@ -12,6 +12,54 @@ $font-main: "w95fa";
 	display: flex;
 }
 
+.window {
+	margin: 2px 2px 2px 4px;
+	height: 30px;
+	background: #c0c0c0;
+	border-width: 2px;
+	border-top-width: 3px;
+	border-left-width: 3px;
+	border-color: #ffffff #808080 #808080 #ffffff;
+	border-style: solid;
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	max-width: 235px;
+	flex-grow: 1;
+	font-size: 16px;
+	letter-spacing: 1px;
+	font-family: $font-main;
+	overflow: hidden;
+	&.active {
+		outline-style: none;
+		border-color: white;
+		border-top-color: #000000a5;
+		border-left-color: #000000a5;
+		position: relative;
+		top: 1px;
+		left: 1px;
+		background: url('../../assets/selectedBg.png');
+	}
+	&:active {
+		outline-style: none;
+		border-color: white;
+		border-top-color: #000000a5;
+		border-left-color: #000000a5;
+		position: relative;
+		top: 1px;
+		left: 1px;
+	}
+	img {
+		height: 75%;
+	}
+	span {
+		max-width: 1000px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+}
+
 .start {
 	margin: 2px 2px 2px 4px;
 	height: 30px;
@@ -20,8 +68,6 @@ $font-main: "w95fa";
 	border-top-width: 3px;
 	border-left-width: 3px;
 	border-color: #ffffff #808080 #808080 #ffffff;
-	background-image: url("../../../assets/window-control.png");
-	background-repeat: no-repeat;
 	display: flex;
 	gap: 4px;
 	align-items: center;
@@ -32,13 +78,12 @@ $font-main: "w95fa";
 	&:active {
 		outline-style: none;
 		border-color: white;
-        border-top-color: #808080c6;
-        border-left-color: #808080c6;
-        position: relative;
-        top: 1px;
-        left: 1px;
+		border-top-color: #808080c6;
+		border-left-color: #808080c6;
+		position: relative;
+		top: 1px;
+		left: 1px;
 	}
-
 	img {
 		height: 80%;
 	}
@@ -62,6 +107,7 @@ $font-main: "w95fa";
 }
 
 .opened-windows {
-	width: 100%;
+	display: flex;
+	width: calc(100% - 88px - 96px);
 	height: 100%;
 }

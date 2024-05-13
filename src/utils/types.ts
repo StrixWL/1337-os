@@ -21,7 +21,7 @@ export interface DragState {
 }
 
 export interface WindowProps {
-	id?: number;
+	id: number;
 	zIndex?: number;
 	backgroundColor?: string;
 	resizeOffset?: number;
@@ -34,4 +34,11 @@ export interface WindowProps {
 	icon?: ReactNode;
 	title?: string;
 	component?: ReactNode;
+}
+
+export interface Windows {
+	[key: number]: WindowProps;
+	currentId: number;
+	currentZIndex: number;
+	focus: number | null;
 }

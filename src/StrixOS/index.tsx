@@ -1,20 +1,14 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
 import { App, WindowProps } from "../utils/types";
 import { Paint, ToF } from "../apps";
+import { Windows } from "../utils/types";
 
 interface WindowsAction {
 	type: string;
 	props: WindowProps;
-}
-
-interface Windows {
-	[key: number]: WindowProps;
-	currentId: number;
-	currentZIndex: number;
-	focus: number | null;
 }
 
 const reducer = (state: Windows, action: WindowsAction): Windows => {
@@ -75,6 +69,12 @@ const StrixOS = () => {
 				});
 		}
 	}
+	const focusWindow = (id: number) => {
+		dispatch({
+			type: "FOCUS",
+			props: { id },
+		})
+	}
 	return (
 		<div style={{
 			height: '100vh',
@@ -91,12 +91,7 @@ const StrixOS = () => {
 							key={window.id}
 							{...window}
 							focused={window.id == windows.focus}
-							focus={() =>
-								dispatch({
-									type: "FOCUS",
-									props: { id: window.id },
-								})
-							}
+							focus={() => focusWindow(window.id)}
 							deleteSelf={() =>
 								dispatch({
 									type: "DELETE",
@@ -107,7 +102,7 @@ const StrixOS = () => {
 					);
 				})}
 			</Desktop>
-			<Taskbar />
+			<Taskbar windows={windows} focusWindow={focusWindow} />
 		</div>
 	);
 };

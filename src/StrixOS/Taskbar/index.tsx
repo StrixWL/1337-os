@@ -1,6 +1,7 @@
 import styles from "./Taskbar.module.scss";
 import windowsIcon from "../../assets/win.png";
 import { useEffect, useState } from "react";
+import { Windows } from "../../utils/types";
 
 const getTime = () => {
 	const date = new Date();
@@ -17,18 +18,23 @@ const getTime = () => {
 	return formattedTime;
 };
 
-const Taskbar = () => {
-	const [time, setTime] = useState(getTime())
+interface Taskbar {
+	windows: Windows;
+	focusWindow: (id: number) => void;
+}
+
+const Taskbar = ({ windows, focusWindow }: Taskbar) => {
+	const [time, setTime] = useState(getTime());
 	useEffect(() => {
 		const date = new Date();
 		let seconds = date.getSeconds();
 		setTimeout(() => {
-			setTime(getTime())
+			setTime(getTime());
 			setInterval(() => {
-				setTime(getTime())
-			}, 60000)
-		}, 60000 - seconds * 1000)
-	}, [])
+				setTime(getTime());
+			}, 60000);
+		}, 60000 - seconds * 1000);
+	}, []);
 	return (
 		<div className={styles["Taskbar"]}>
 			<button className={styles["start"]}>
@@ -36,6 +42,22 @@ const Taskbar = () => {
 				Start
 			</button>
 			<div className={styles["opened-windows"]}>
+				{Object.keys(windows).map((key: string) => {
+					const window = windows[parseInt(key)];
+					if (!window) return null;
+					return (
+						<button
+							className={`${styles["window"]} ${window.id == windows.focus ? styles["active"] : ''}`}
+							onClick={() => focusWindow(window.id)}
+							style={{
+								// backgroundColor:  ? "transparent" : 'red'
+							}}
+						>
+							{window.icon}
+							<span>{window.title}</span>
+						</button>
+					);
+				})}
 			</div>
 			<div className={styles["system-tray"]}>
 				<div className={styles["time"]}>{time}</div>
