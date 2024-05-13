@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
-import { WindowProps } from "../utils/types";
+import { App, WindowProps } from "../utils/types";
 import { Paint, ToF } from "../apps";
 
 interface WindowsAction {
@@ -60,36 +60,28 @@ const StrixOS = () => {
 			focus: null,
 		}
 	);
-	useEffect(() => {
-		console.log(windows);
-	}, [windows]);
+	const launchApp = (name: App) => {
+		switch (name) {
+			case "PAINT":
+				dispatch({
+					type: "ADD",
+					props: Paint,
+				});
+				break ;
+			case "TOF":
+				dispatch({
+					type: "ADD",
+					props: ToF,
+				});
+		}
+	}
 	return (
 		<div style={{
 			height: '100vh',
 			display: 'flex',
 			flexDirection: 'column'
 		}}>
-			<button
-				onClick={() => {
-					dispatch({
-						type: "ADD",
-						props: ToF,
-					});
-				}}
-			>
-				ToF
-			</button>
-			<button
-				onClick={() => {
-					dispatch({
-						type: "ADD",
-						props: Paint,
-					});
-				}}
-			>
-				Paint
-			</button>
-			<Desktop>
+			<Desktop launchApp={launchApp}>
 				{Object.keys(windows).map((key: string) => {
 					const window = windows[parseInt(key)];
 					if (!window)

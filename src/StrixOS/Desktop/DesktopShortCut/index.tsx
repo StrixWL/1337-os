@@ -12,6 +12,7 @@ interface DesktopShortCut {
 	setSelectedAlone: () => void; // sets shortcut selected and remove all other shortcuts
 	selected: boolean;
 	setScDragState: (state: DragState) => void;
+	launch: () => void
 }
 
 const DesktopShortCut = ({
@@ -24,6 +25,7 @@ const DesktopShortCut = ({
 	setSelectedAlone,
 	selected,
 	setScDragState,
+	launch
 }: DesktopShortCut) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [mouseDownTime, setMouseDownTime] = useState(0)
@@ -74,6 +76,7 @@ const DesktopShortCut = ({
 				if (deltaT < 250)
 					setSelectedAlone()
 			}}
+			onDoubleClick={launch}
 			ref={ref}
 			style={{
 				left: left,

@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+export type App = "TOF" | "PAINT"
+
 export interface Pos {
 	x: number;
 	y: number;

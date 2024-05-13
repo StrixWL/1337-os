@@ -4,14 +4,15 @@ import { SelectionBox, useSelectionBox } from "./SelectionBox";
 import DesktopShortCut from "./DesktopShortCut";
 import paintIcon from "../../assets/paint.png";
 import tofIcon from "../../assets/tof.png";
-import { DragState } from "../../utils/types";
+import { App, DragState } from "../../utils/types";
 
 interface Desktop {
 	children?: ReactNode;
+	launchApp: (name: App) => void
 }
 
 // sc = shortcut
-const Desktop = ({ children }: Desktop) => {
+const Desktop = ({ children, launchApp }: Desktop) => {
 	const { ref, mouseDownHandler, boxDragState, sizes } = useSelectionBox();
 	const [scDragState, setScDragState] = useState<DragState>({
 		startPos: {
@@ -24,6 +25,16 @@ const Desktop = ({ children }: Desktop) => {
 		},
 		isDragging: false,
 	});
+	const unselectAll = () => {
+		setShortCuts(prevState => {
+			const _shortCuts = prevState.map(shortcut => {
+				const _shortcut = {...shortcut}
+				_shortcut.selected = false
+				return _shortcut
+			})
+			return _shortCuts
+		})
+	}
 	const [shortCuts, setShortCuts] = useState([
 		{
 			name: "Paint",
@@ -31,6 +42,10 @@ const Desktop = ({ children }: Desktop) => {
 			top: 100,
 			left: 100,
 			selected: false,
+			launch: () => {
+				unselectAll()
+				launchApp("PAINT")
+			}
 		},
 		{
 			name: "Tower Of Fantasy",
@@ -38,6 +53,10 @@ const Desktop = ({ children }: Desktop) => {
 			top: 200,
 			left: 200,
 			selected: false,
+			launch: () => {
+				unselectAll()
+				launchApp("TOF")
+			}
 		},
 		{
 			name: "Paint",
@@ -45,6 +64,10 @@ const Desktop = ({ children }: Desktop) => {
 			top: 200,
 			left: 400,
 			selected: false,
+			launch: () => {
+				unselectAll()
+				launchApp("PAINT")
+			}
 		},
 	]);
 	useEffect(() => {
@@ -108,6 +131,7 @@ const Desktop = ({ children }: Desktop) => {
 					}}
 					selected={shortcut.selected}
 					setScDragState={setScDragState}
+					launch={shortcut.launch}
 				/>
 			))}
 			<SelectionBox boxDragState={boxDragState} sizes={sizes} />
