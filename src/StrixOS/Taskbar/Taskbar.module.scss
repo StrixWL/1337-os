@@ -1,8 +1,8 @@
 @font-face {
-	font-family: "Windows Regular";
-	src: url("../../assets/fonts/Windows\ Regular.ttf") format("truetype");
+	font-family: "w95fa";
+	src: url("../../assets/fonts/w95fa.woff2") format("truetype");
 }
-$font-main: "Windows Regular";
+$font-main: "w95fa";
 
 .Taskbar {
 	height: 38px;
