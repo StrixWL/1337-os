@@ -47,11 +47,9 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 					if (!window) return null;
 					return (
 						<button
+							key={key}
 							className={`${styles["window"]} ${window.id == windows.focus ? styles["active"] : ''}`}
 							onClick={() => focusWindow(window.id!)}
-							style={{
-								// backgroundColor:  ? "transparent" : 'red'
-							}}
 						>
 							{window.icon}
 							<span>{window.title}</span>
