@@ -39,8 +39,8 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 		{
 			name: "Paint",
 			icon: paintIcon,
-			top: 100,
-			left: 100,
+			top: 34,
+			left: 34,
 			selected: false,
 			launch: () => {
 				unselectAll()
@@ -51,7 +51,7 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 			name: "Tower Of Fantasy",
 			icon: tofIcon,
 			top: 200,
-			left: 200,
+			left: 34,
 			selected: false,
 			launch: () => {
 				unselectAll()
@@ -61,8 +61,8 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 		{
 			name: "Paint",
 			icon: paintIcon,
-			top: 200,
-			left: 400,
+			top: 120,
+			left: 34,
 			selected: false,
 			launch: () => {
 				unselectAll()
