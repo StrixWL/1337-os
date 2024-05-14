@@ -24,7 +24,8 @@ const Window = ({
     focused,
 	zIndex = 1,
 	icon = null,
-	title = ""
+	title = "",
+	removeHeader = false
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
 		sizes: { width: 510, height: 400, left: 300, top: 200 },
@@ -203,7 +204,13 @@ const Window = ({
 		<div
 			id="window"
 			ref={ref}
-			style={{
+			style={removeHeader ? {
+				cursor: state.cursor,
+				left: "-6px",
+				top: "-27px",
+				zIndex: zIndex,
+				visibility: "hidden"
+			} : {
 				cursor: state.cursor,
 				height: state.maximized ? 'calc(100% - 24px)' : state.sizes.height,
 				width: state.maximized ? 'calc(100% + 2px)' : state.sizes.width,

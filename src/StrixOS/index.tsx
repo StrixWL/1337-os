@@ -3,7 +3,7 @@ import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
 import { App, WindowProps } from "../utils/types";
-import { Paint, ToF } from "../apps";
+import { Paint, ToF, Winamp } from "../apps";
 import { Windows } from "../utils/types";
 
 interface WindowsAction {
@@ -44,16 +44,14 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 			return _newState;
 	}
 	return { ...state };
-}
+};
 
 const StrixOS = () => {
-	const [windows, dispatch] = useReducer(reducer,
-		{
-			currentZIndex: 1,
-			currentId: 0,
-			focus: null,
-		}
-	);
+	const [windows, dispatch] = useReducer(reducer, {
+		currentZIndex: 1,
+		currentId: 0,
+		focus: null,
+	});
 	const launchApp = (name: App) => {
 		switch (name) {
 			case "PAINT":
@@ -61,31 +59,38 @@ const StrixOS = () => {
 					type: "ADD",
 					props: Paint,
 				});
-				break ;
+				break;
 			case "TOF":
 				dispatch({
 					type: "ADD",
 					props: ToF,
 				});
+				break;
+			case "WINAMP":
+				dispatch({
+					type: "ADD",
+					props: Winamp,
+				});
 		}
-	}
+	};
 	const focusWindow = (id: number) => {
 		dispatch({
 			type: "FOCUS",
 			props: { id },
-		})
-	}
+		});
+	};
 	return (
-		<div style={{
-			height: '100vh',
-			display: 'flex',
-			flexDirection: 'column'
-		}}>
+		<div
+			style={{
+				height: "100vh",
+				display: "flex",
+				flexDirection: "column",
+			}}
+		>
 			<Desktop launchApp={launchApp}>
 				{Object.keys(windows).map((key: string) => {
 					const window = windows[parseInt(key)];
-					if (!window)
-						return null;
+					if (!window) return null;
 					return (
 						<Window
 							key={window.id}

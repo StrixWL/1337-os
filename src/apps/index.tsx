@@ -1,5 +1,6 @@
 import PaintComponent from './Paint'
 import ToFComponent from './ToF'
+import WinampComponent from './Winamp'
 import { WindowProps } from '../utils/types'
 import paintIcon from "../assets/paint.png"
 
@@ -18,7 +19,14 @@ const ToF: WindowProps = {
     title: "Tower Of Fantasy Clone"
 }
 
+const Winamp: WindowProps = {
+    component: <WinampComponent />,
+    title: "Winamp",
+    removeHeader: true
+}
+
 export {
     Paint,
-    ToF
+    ToF,
+    Winamp
 }

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type App = "TOF" | "PAINT"
+export type App = "TOF" | "PAINT" | "WINAMP"
 
 export interface Pos {
 	x: number;
@@ -34,6 +34,7 @@ export interface WindowProps {
 	icon?: ReactNode;
 	title?: string;
 	component?: ReactNode;
+	removeHeader?: boolean;
 }
 
 export interface Windows {
