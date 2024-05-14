@@ -18,7 +18,7 @@ const Window = ({
 	dragOffset = 30,
 	minWidth = 200,
 	minHeight = 200,
-	component,
+	Component = () => <></>,
 	focus,
 	deleteSelf,
     focused,
@@ -230,7 +230,7 @@ const Window = ({
 				icon={icon}
 				title={title}
 			/>
-			{component}
+			<Component close={() => deleteSelf!()} />
 			{state.isDragging && (
 				<div
                     id="cursor-overlay"

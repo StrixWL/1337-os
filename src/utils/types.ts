@@ -33,7 +33,7 @@ export interface WindowProps {
 	deleteSelf?: () => void;
 	icon?: ReactNode;
 	title?: string;
-	component?: ReactNode;
+	Component?: ({}: {close?: () => void}) => JSX.Element;
 	removeHeader?: boolean;
 }
 
