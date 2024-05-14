@@ -4,6 +4,7 @@ import { SelectionBox, useSelectionBox } from "./SelectionBox";
 import DesktopShortCut from "./DesktopShortCut";
 import paintIcon from "../../assets/paint.png";
 import tofIcon from "../../assets/tof.png";
+import WinampIcon from "../../assets/winamp.png";
 import { App, DragState } from "../../utils/types";
 
 interface Desktop {
@@ -37,14 +38,14 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 	}
 	const [shortCuts, setShortCuts] = useState([
 		{
-			name: "Paint",
-			icon: paintIcon,
+			name: "Winamp",
+			icon: WinampIcon,
 			top: 34,
 			left: 34,
 			selected: false,
 			launch: () => {
 				unselectAll()
-				launchApp("PAINT")
+				launchApp("WINAMP")
 			}
 		},
 		{
