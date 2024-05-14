@@ -91,7 +91,7 @@ const StrixOS = () => {
 							key={window.id}
 							{...window}
 							focused={window.id == windows.focus}
-							focus={() => focusWindow(window.id)}
+							focus={() => focusWindow(window.id!)}
 							deleteSelf={() =>
 								dispatch({
 									type: "DELETE",

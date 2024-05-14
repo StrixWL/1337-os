@@ -21,7 +21,7 @@ export interface DragState {
 }
 
 export interface WindowProps {
-	id: number;
+	id?: number;
 	zIndex?: number;
 	backgroundColor?: string;
 	resizeOffset?: number;
