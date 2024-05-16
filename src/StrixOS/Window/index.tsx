@@ -18,6 +18,8 @@ const Window = ({
 	dragOffset = 30,
 	minWidth = 200,
 	minHeight = 200,
+	width = 510,
+	height = 400,
 	Component = () => <></>,
 	focus,
 	deleteSelf,
@@ -28,7 +30,7 @@ const Window = ({
 	removeHeader = false
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
-		sizes: { width: 510, height: 400, left: 300, top: 200 },
+		sizes: { width, height, left: 300, top: 200 },
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",

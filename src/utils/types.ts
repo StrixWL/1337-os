@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export type App = "TOF" | "PAINT" | "WINAMP"
+export type App = "TOF" | "PAINT" | "WINAMP" | "CALCULATOR"
 
 export interface Pos {
 	x: number;
@@ -26,6 +26,8 @@ export interface WindowProps {
 	backgroundColor?: string;
 	resizeOffset?: number;
 	dragOffset?: number;
+	height?: number;
+	width?: number;
 	minWidth?: number;
 	minHeight?: number;
 	focus?: () => void;
