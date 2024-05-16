@@ -3,7 +3,7 @@ import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
 import { App, WindowProps } from "../utils/types";
-import { Paint, ToF, Winamp } from "../apps";
+import { Calculator, Paint, ToF, Winamp } from "../apps";
 import { Windows } from "../utils/types";
 
 interface WindowsAction {
@@ -70,6 +70,12 @@ const StrixOS = () => {
 				dispatch({
 					type: "ADD",
 					props: Winamp,
+				});
+				break ;
+			case "CALCULATOR":
+				dispatch({
+					type: "ADD",
+					props: Calculator,
 				});
 		}
 	};

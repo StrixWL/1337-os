@@ -5,6 +5,7 @@ import DesktopShortCut from "./DesktopShortCut";
 import paintIcon from "../../assets/paint.png";
 import tofIcon from "../../assets/tof.png";
 import WinampIcon from "../../assets/winamp.png";
+import CalculatorIcon from "../../assets/calculator.png";
 import { App, DragState } from "../../utils/types";
 
 interface Desktop {
@@ -68,6 +69,17 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 			launch: () => {
 				unselectAll()
 				launchApp("PAINT")
+			}
+		},
+		{
+			name: "Calculator",
+			icon: CalculatorIcon,
+			top: 295,
+			left: 34,
+			selected: false,
+			launch: () => {
+				unselectAll()
+				launchApp("CALCULATOR")
 			}
 		},
 	]);
