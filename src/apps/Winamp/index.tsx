@@ -11,6 +11,7 @@ const WinampComponent = ({
 	useEffect(() => {
 		const webamp = new Webamp({
 			initialTracks: [],
+			zIndex: 214748364
 		});
 		const webampElem = document.getElementById('winamp') as HTMLDivElement
 		webamp.renderWhenReady(webampElem).then(() => {
