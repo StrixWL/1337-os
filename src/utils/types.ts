@@ -38,6 +38,7 @@ export interface WindowProps {
 	Component?: ({}: {close?: () => void}) => JSX.Element;
 	removeHeader?: boolean;
 	unique?: boolean;
+	resizable?: boolean
 }
 
 export interface Windows {

@@ -27,7 +27,8 @@ const Window = ({
 	zIndex = 1,
 	icon = null,
 	title = "",
-	removeHeader = false
+	removeHeader = false,
+	resizable = true
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
 		sizes: { width, height, left: 300, top: 200 },
@@ -47,7 +48,9 @@ const Window = ({
 			const bottom = boundingRect.height - top;
 
 			let cursor = "auto";
-			if (top < resizeOffset && left < resizeOffset)
+			if (!resizable)
+                cursor = "default";
+			else if (top < resizeOffset && left < resizeOffset)
                 cursor = "nw-resize";
 			else if (bottom < resizeOffset && left < resizeOffset)
 				cursor = "sw-resize";

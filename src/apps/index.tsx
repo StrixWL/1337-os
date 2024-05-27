@@ -23,7 +23,7 @@ const Paint: WindowProps = {
 const ToF: WindowProps = {
     Component: ToFComponent,
     title: "Tower Of Fantasy Clone",
-    unique: false
+    unique: false,
 }
 
 const Winamp: WindowProps = {
