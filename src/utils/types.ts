@@ -37,6 +37,7 @@ export interface WindowProps {
 	title?: string;
 	Component?: ({}: {close?: () => void}) => JSX.Element;
 	removeHeader?: boolean;
+	unique?: boolean;
 }
 
 export interface Windows {

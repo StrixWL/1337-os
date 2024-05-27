@@ -14,6 +14,30 @@ interface WindowsAction {
 const reducer = (state: Windows, action: WindowsAction): Windows => {
 	switch (action.type) {
 		case "ADD":
+			let unique = false
+			let id = 0
+			if (action.props.unique) {
+				Object.keys(state).forEach((key: string) => {
+					const window = state[parseInt(key)];
+					if (!window) return;
+					if (window.title == action.props.title) {
+						unique = true
+						id = window.id!
+					}
+				})
+			}
+			if (unique) {
+				const newZIndex = state.currentZIndex;
+				return {
+					...state,
+					currentZIndex: state.currentZIndex + 1,
+					focus: id!,
+					[id]: {
+						...state[id!],
+						zIndex: newZIndex,
+					},
+				};
+			}
 			const newState = {
 				...state,
 				currentId: state.currentId + 1,

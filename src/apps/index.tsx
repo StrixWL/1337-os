@@ -16,19 +16,22 @@ img.src = CalculatorIcon
 const Paint: WindowProps = {
     Component: PaintComponent,
     icon: <img src={paintIcon} alt='Paint icon' />,
-    title: "Untitled - Paint"
+    title: "Untitled - Paint",
+    unique: false
 }
 
 const ToF: WindowProps = {
     Component: ToFComponent,
-    title: "Tower Of Fantasy Clone"
+    title: "Tower Of Fantasy Clone",
+    unique: false
 }
 
 const Winamp: WindowProps = {
     Component: WinampComponent,
     title: "Winamp",
     icon: <img src={WinampIcon} alt='Winamp icon' />,
-    removeHeader: true
+    removeHeader: true,
+    unique: true
 }
 
 const Calculator: WindowProps = {
@@ -38,7 +41,8 @@ const Calculator: WindowProps = {
     width: 300,
     height: 300,
     minHeight: 250,
-    minWidth: 250
+    minWidth: 250,
+    unique: false
 }
 
 export {
