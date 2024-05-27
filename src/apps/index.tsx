@@ -2,16 +2,19 @@ import PaintComponent from './Paint'
 import ToFComponent from './ToF'
 import WinampComponent from './Winamp'
 import CalculatorComponent from './Calculator'
+import MinesweeperComponent from './Minesweeper'
 import { WindowProps } from '../utils/types'
 import paintIcon from "../assets/paint.png"
 import WinampIcon from "../assets/winamp.png"
 import CalculatorIcon from "../assets/calculator.png"
+import MinesweeperIcon from "../assets/minesweeper.png"
 
 // preloading img so that it immediately shows up when user opens a window
 const img = new Image()
 img.src = paintIcon
 img.src = WinampIcon
 img.src = CalculatorIcon
+img.src = MinesweeperIcon
 
 const Paint: WindowProps = {
     Component: PaintComponent,
@@ -45,9 +48,20 @@ const Calculator: WindowProps = {
     unique: false
 }
 
+const Minesweeper: WindowProps = {
+    Component: MinesweeperComponent,
+    icon: <img src={MinesweeperIcon} alt='Minesweeper icon' />,
+    title: "Minesweeper",
+    width: 278,
+    height: 340,
+    unique: false,
+    resizable: false
+}
+
 export {
     Paint,
     ToF,
     Winamp,
-    Calculator
+    Calculator,
+    Minesweeper
 }

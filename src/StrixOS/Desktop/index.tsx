@@ -6,6 +6,7 @@ import paintIcon from "../../assets/paint.png";
 import tofIcon from "../../assets/tof.png";
 import WinampIcon from "../../assets/winamp.png";
 import CalculatorIcon from "../../assets/calculator.png";
+import MinesweeperIcon from "../../assets/minesweeper.png";
 import { App, DragState } from "../../utils/types";
 
 interface Desktop {
@@ -80,6 +81,18 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 			launch: () => {
 				unselectAll()
 				launchApp("CALCULATOR")
+			}
+		},
+		{
+			name: "Minesweeper",
+			icon: MinesweeperIcon,
+			top: 385,
+			left: 34,
+			width: 200,
+			selected: false,
+			launch: () => {
+				unselectAll()
+				launchApp("MINESWEEPER")
 			}
 		},
 	]);
