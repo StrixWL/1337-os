@@ -33,8 +33,9 @@ export interface WindowProps {
 	focus?: () => void;
     focused?: boolean;
 	deleteSelf?: () => void;
-	icon?: ReactNode;
 	title?: string;
+	iconUrl?: string;
+	name?: string;
 	Component?: ({}: {close?: () => void}) => JSX.Element;
 	removeHeader?: boolean;
 	unique?: boolean;

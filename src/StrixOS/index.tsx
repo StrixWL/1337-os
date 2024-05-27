@@ -3,7 +3,7 @@ import Desktop from "./Desktop";
 import Taskbar from "./Taskbar";
 import Window from "./Window";
 import { App, WindowProps } from "../utils/types";
-import { Calculator, Minesweeper, Paint, ToF, Winamp } from "../apps";
+import Apps from "../apps";
 import { Windows } from "../utils/types";
 
 interface WindowsAction {
@@ -62,7 +62,6 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 				},
 			};
 		case "DELETE":
-			console.log("deleting", action.props.id!);
 			const _newState = { ...state };
 			delete _newState[action.props.id!];
 			return _newState;
@@ -77,37 +76,10 @@ const StrixOS = () => {
 		focus: null,
 	});
 	const launchApp = (name: App) => {
-		switch (name) {
-			case "PAINT":
-				dispatch({
-					type: "ADD",
-					props: Paint,
-				});
-				break;
-			case "TOF":
-				dispatch({
-					type: "ADD",
-					props: ToF,
-				});
-				break;
-			case "WINAMP":
-				dispatch({
-					type: "ADD",
-					props: Winamp,
-				});
-				break ;
-			case "CALCULATOR":
-				dispatch({
-					type: "ADD",
-					props: Calculator,
-				});
-				break ;
-			case "MINESWEEPER":
-				dispatch({
-					type: "ADD",
-					props: Minesweeper,
-				});
-		}
+		dispatch({
+			type: "ADD",
+			props: Apps[name],
+		});
 	};
 	const focusWindow = (id: number) => {
 		dispatch({

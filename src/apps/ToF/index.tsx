@@ -3,7 +3,7 @@ const ToF = () => {
 		<iframe
 			src="https://mycv.strix.moe/ToF_Clone/"
 			frameBorder="0"
-			title="paint"
+			title="tower of fantasy"
 			style={{
 				display: "block",
 				width: "100%",

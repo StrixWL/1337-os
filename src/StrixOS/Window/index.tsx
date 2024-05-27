@@ -25,7 +25,7 @@ const Window = ({
 	deleteSelf,
     focused,
 	zIndex = 1,
-	icon = null,
+	iconUrl,
 	title = "",
 	removeHeader = false,
 	resizable = true
@@ -232,7 +232,7 @@ const Window = ({
 				maximize={() =>
 					setState({ ...state, maximized: !state.maximized })
 				}
-				icon={icon}
+				icon={iconUrl || ''}
 				title={title}
 			/>
 			<Component close={() => deleteSelf!()} />

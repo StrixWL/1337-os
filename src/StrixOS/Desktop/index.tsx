@@ -2,12 +2,8 @@ import { ReactNode, useEffect, useState } from "react";
 import styles from "./Desktop.module.scss";
 import { SelectionBox, useSelectionBox } from "./SelectionBox";
 import DesktopShortCut from "./DesktopShortCut";
-import paintIcon from "../../assets/paint.png";
-import tofIcon from "../../assets/tof.png";
-import WinampIcon from "../../assets/winamp.png";
-import CalculatorIcon from "../../assets/calculator.png";
-import MinesweeperIcon from "../../assets/minesweeper.png";
 import { App, DragState } from "../../utils/types";
+import Apps from "../../apps";
 
 interface Desktop {
 	children?: ReactNode;
@@ -38,64 +34,22 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 			return _shortCuts
 		})
 	}
-	const [shortCuts, setShortCuts] = useState([
-		{
-			name: "Winamp",
-			icon: WinampIcon,
-			top: 34,
-			left: 34,
-			selected: false,
-			launch: () => {
-				unselectAll()
-				launchApp("WINAMP")
+	const [shortCuts, setShortCuts] = useState(
+		Object.keys(Apps).map((key, i) => {
+			const app = Apps[key as keyof typeof Apps]
+			return {
+				name: app.name || 'Untitled',
+				iconUrl: app.iconUrl || '',
+				left: 34,
+				top: 30 + 90 * i,
+				selected: false,
+				launch: () => {
+					unselectAll(),
+					launchApp(key as keyof typeof Apps)
+				}
 			}
-		},
-		{
-			name: "Tower Of Fantasy",
-			icon: tofIcon,
-			top: 200,
-			left: 34,
-			selected: false,
-			launch: () => {
-				unselectAll()
-				launchApp("TOF")
-			}
-		},
-		{
-			name: "Paint",
-			icon: paintIcon,
-			top: 120,
-			left: 34,
-			selected: false,
-			launch: () => {
-				unselectAll()
-				launchApp("PAINT")
-			}
-		},
-		{
-			name: "Calculator",
-			icon: CalculatorIcon,
-			top: 295,
-			left: 34,
-			selected: false,
-			launch: () => {
-				unselectAll()
-				launchApp("CALCULATOR")
-			}
-		},
-		{
-			name: "Minesweeper",
-			icon: MinesweeperIcon,
-			top: 385,
-			left: 34,
-			width: 200,
-			selected: false,
-			launch: () => {
-				unselectAll()
-				launchApp("MINESWEEPER")
-			}
-		},
-	]);
+		})
+	);
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
 		window.addEventListener("mousemove", handleMouseMove);
@@ -140,7 +94,7 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 				<DesktopShortCut
 					key={index}
 					name={shortcut.name}
-					icon={shortcut.icon}
+					icon={shortcut.iconUrl}
 					sizes={sizes}
 					top={shortcut.top}
 					left={shortcut.left}

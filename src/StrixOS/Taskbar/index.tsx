@@ -51,7 +51,7 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 							className={`${styles["window"]} ${window.id == windows.focus ? styles["active"] : ''}`}
 							onClick={() => focusWindow(window.id!)}
 						>
-							{window.icon}
+							<img src={window.iconUrl}/>
 							<span>{window.title}</span>
 						</button>
 					);
