@@ -11,10 +11,8 @@ const Minesweeper = () => {
 	return (
 		<iframe ref={ref}
 			src="https://98.js.org/programs/minesweeper/"
-			frameBorder="0"
 			title="minesweeper"
 			style={{
-				display: "block",
 				width: "100%",
 				height: "100%",
 				backgroundColor: "rgb(192,192,192)",
