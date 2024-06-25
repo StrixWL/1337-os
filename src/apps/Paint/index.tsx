@@ -1,14 +1,14 @@
 const Paint = () => {
 	return (
 		<iframe
-			src="https://jspaint.app"
+			src="jspaint/index.html"
 			frameBorder="0"
 			title="paint"
 			style={{
 				display: "block",
 				width: "100%",
 				height: "100%",
-				backgroundColor: "rgb(192,192,192)",
+				backgroundColor: "#A6CAF0",
 			}}
 		/>
 	);
