@@ -4,4 +4,13 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; 
+    overflow: hidden;
+}
+
+#root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 }
