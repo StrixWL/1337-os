@@ -64,6 +64,16 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 		case "DELETE":
 			const _newState = { ...state };
 			delete _newState[action.props.id!];
+			let biggestZIndex = -1
+			Object.keys(_newState).forEach((key: string) => {
+				const window = _newState[parseInt(key)];
+				if (!window) return
+				if (window.zIndex! > biggestZIndex) {
+					_newState.focus = window.id!
+					biggestZIndex = window.zIndex!
+				}
+
+			})
 			return _newState;
 	}
 	return { ...state };
