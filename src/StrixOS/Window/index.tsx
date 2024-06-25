@@ -222,7 +222,7 @@ const Window = ({
 			style={removeHeader ? {
 				cursor: state.cursor,
 				left: "-9px",
-				top: "-37px",
+				top: "-39px",
 				zIndex: zIndex,
 				visibility: "hidden"
 			} : {
