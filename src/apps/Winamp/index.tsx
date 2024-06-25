@@ -5,6 +5,8 @@ interface WinampComponent {
 	close?: () => void;
 }
 
+const closeAudio = new Audio("./audio/window_close.wav")
+
 const WinampComponent = ({ close }: WinampComponent) => {
 	useEffect(() => {
 		const webamp = new Webamp({
@@ -48,6 +50,7 @@ const WinampComponent = ({ close }: WinampComponent) => {
 		});
 		webamp.onClose(() => {
 			webamp.dispose();
+			closeAudio.play()
 			close!();
 		});
 	}, []);
