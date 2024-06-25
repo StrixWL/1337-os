@@ -77,11 +77,6 @@ const Window = ({
                 setState((prevState) => ({ ...prevState, cursor }));
 		} else {
 			let _sp = state.soundPlayed
-			if (state.soundPlayed == false) {
-				// ugly
-				mouseDragAudio.play()
-				_sp = true
-			}
 			let hDrag = event.clientX - state.startDrag.x;
 			let vDrag = event.clientY - state.startDrag.y;
 			const cursor = state.cursor;
@@ -172,6 +167,11 @@ const Window = ({
 					};
 					break;
 				case "default":
+					if (!state.maximized && state.soundPlayed == false) {
+						// ugly
+						mouseDragAudio.play()
+						_sp = true
+					}
 					newSizes = {
 						...state.sizes,
 						left: state.sizes.left + hDrag,
