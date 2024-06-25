@@ -48,7 +48,7 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 					return (
 						<button
 							key={key}
-							className={`${styles["window"]} ${window.id == windows.focus ? styles["active"] : ''}`}
+							className={`${styles["window"]} ${window.id == windows.focus && !window.minimized ? styles["active"] : ''}`}
 							onClick={() => focusWindow(window.id!)}
 						>
 							<div className={styles['icon']}></div>

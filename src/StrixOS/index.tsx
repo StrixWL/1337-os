@@ -59,6 +59,7 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 				[action.props.id!]: {
 					...state[action.props.id!],
 					zIndex: newZIndex,
+					minimized: false
 				},
 			};
 		case "DELETE":
@@ -68,13 +69,31 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 			Object.keys(_newState).forEach((key: string) => {
 				const window = _newState[parseInt(key)];
 				if (!window) return
-				if (window.zIndex! > biggestZIndex) {
+				if (!window.minimized && window.zIndex! > biggestZIndex) {
 					_newState.focus = window.id!
 					biggestZIndex = window.zIndex!
 				}
-
 			})
 			return _newState;
+		case "MINIMIZE":
+			let _biggestZIndex = -1
+			let focus = -1
+			Object.keys(state).forEach((key: string) => {
+				const window = state[parseInt(key)];
+				if (!window) return
+				if (window.id != action.props.id && window.zIndex! > _biggestZIndex) {
+					focus = window.id!
+					_biggestZIndex = window.zIndex!
+				}
+			})
+			return {
+				...state,
+				focus,
+				[action.props.id!]: {
+					...state[action.props.id!],
+					minimized: true
+				},
+			};
 	}
 	return { ...state };
 };
@@ -121,6 +140,13 @@ const StrixOS = () => {
 									props: { id: window.id },
 								})
 							}
+							minimizeSelf={() =>
+								dispatch({
+									type: "MINIMIZE",
+									props: { id: window.id },
+								})
+							}
+							minimized={window.minimized}
 						/>
 					);
 				})}

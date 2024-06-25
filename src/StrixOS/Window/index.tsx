@@ -26,12 +26,14 @@ const Window = ({
 	Component = () => <></>,
 	focus,
 	deleteSelf,
+	minimizeSelf,
     focused,
 	zIndex = 1,
 	iconUrl,
 	title = "",
 	removeHeader = false,
-	resizable = true
+	resizable = true,
+	minimized = false
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
 		sizes: { width, height, left: 200, top: 100 },
@@ -224,7 +226,8 @@ const Window = ({
 				left: "-9px",
 				top: "-39px",
 				zIndex: zIndex,
-				visibility: "hidden"
+				visibility: "hidden",
+				display: minimized ? "none" : "block"
 			} : {
 				cursor: state.cursor,
 				height: state.maximized ? 'calc(100% - 42px)' : state.sizes.height,
@@ -234,12 +237,14 @@ const Window = ({
 				backgroundColor: focused ? backgroundColor : "#DEDEDE",
 				boxShadow: focused ? "4px 4px 0px 0px rgba(176, 164, 233, 0.6)" : "none",
 				zIndex: zIndex,
+				display: minimized ? "none" : "block"
 			}}
 			onMouseDown={handleMouseDown}
 			className={styles["window"]}
 		>
             <WindowHeader
 				close={() => deleteSelf!()}
+				minimize={() => minimizeSelf!()}
 				maximize={() =>
 					setState({ ...state, maximized: !state.maximized })
 				}
