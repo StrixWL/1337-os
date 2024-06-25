@@ -8,19 +8,23 @@ interface WinampComponent {
 const WinampComponent = ({ close }: WinampComponent) => {
 	useEffect(() => {
 		const webamp = new Webamp({
-			initialTracks: [],
+			initialTracks: [
+				{
+					metaData: {
+						artist: "mynamefishy",
+						title: "freegames-dot-com",
+					},
+					url: "/songs/freegames-dot-com.mp3",
+				},
+			],
 			availableSkins: [
 				{
-					url: "/webamp/themes/Card_Captor_Sakura_-_Purple_Tomoyo.wsz",
+					url: "/webamp/themes/Iwakura_Lain.wsz",
 					name: "lain 1",
 				},
 				{
-					url: "/webamp/themes/Iwakura_Lain.wsz",
-					name: "lain 2",
-				},
-				{
 					url: "/webamp/themes/lainamp.ZIP",
-					name: "lain 3 (default)",
+					name: "lain 2 (default)",
 				},
 				{
 					url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
@@ -29,7 +33,7 @@ const WinampComponent = ({ close }: WinampComponent) => {
 				{
 					url: "/webamp/themes/bd3bf6250ffd41012a07e0601bb0fb4c.wsz",
 					name: "-",
-				},
+				}
 			],
 			initialSkin: {
 				url: "/webamp/themes/lainamp.ZIP",
