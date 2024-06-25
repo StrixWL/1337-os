@@ -1,22 +1,28 @@
 .window-header {
 	position: absolute;
-	top: 2px;
+	top: 3.5px;
 	left: 4px;
-	height: 20px;
-	background-color: #000080;
-	width: calc(100% - 8px);
-	color: white;
+	height: 23px;
+	width: calc(100% - 13px);
+	color: #4E23CF;
+    border: 3px solid #4E23CF;
 	display: flex;
 	h1 {
 		font-size: 12px;
-		font-family: Tahoma;
-		font-family: "Noto Sans";
+		font-family: "Pixel";
 		font-weight: 600;
-		margin: 0;
+		display: flex;
+		align-items: center;
+		margin: 0 0 2px 0;
 		padding: 0 6px;
 		position: relative;
 		top: 1px;
 		text-wrap: nowrap;
+	}
+	.icon {
+		background-color: #4E23CF;
+		margin: 2.5px 0 2.5px 3px;
+		min-width: 18px;
 	}
 	img {
 		padding: 2px 0 2px 5px;
@@ -31,22 +37,23 @@ button:focus {
 	justify-content: end;
 	align-items: center;
 	button {
-		margin: 2px 2px 2px 0;
-		width: 14px;
-		height: 13.5px;
-		background: #c0c0c0;
-		border-width: 1px;
-		border-color: #ffffff #808080 #808080 #ffffff;
-		background-image: url("../../../assets/window-control.png");
-		background-repeat: no-repeat;
+		margin: 1px 4px 1px 0;
+		width: 18px;
+		height: 18px;
+		background-color: transparent;
+		border: none;
+		background-size: cover;
+		&:hover {
+			background-color: #e599ee;
+		}
 	}
     .minimize-btn {
-		background-position: calc(-13.5px * 0) 1px;
+		background-image: url("../../../assets/minimize.png");
     }
     .maximize-btn {
-        background-position: calc(-13.5px * 1) 1px;
+		background-image: url("../../../assets/maximize.png");
     }
     .close-btn {
-        background-position: calc(-13.5px * 3) 1px;
+		background-image: url("../../../assets/button_close.png");
     }
 }

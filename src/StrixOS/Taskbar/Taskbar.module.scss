@@ -1,21 +1,26 @@
 @font-face {
-	font-family: "w95fa";
-	src: url("../../assets/fonts/w95fa.woff2") format("truetype");
+	font-family: "Dinkie";
+	src: url("../../assets/fonts/DinkieBitmap-7px.ttf") format("truetype");
 }
-$font-main: "w95fa";
+@font-face {
+	font-family: "Pixel";
+	src: url("../../assets/fonts/PixelMplus10-Regular.ttf") format("truetype");
+}
 
 .Taskbar {
 	height: 38px;
 	background: linear-gradient(to bottom right, #121213, #232325);
-	background: #c0c0c0;
-	border-top: 3px solid #dfdfdf;
+	background: #F1DCF7;
+	border-top: 3px solid white;
 	display: flex;
 }
 
 .window {
+	color: #431CC3;
+	font-weight: 300;
 	margin: 2px 2px 2px 4px;
 	height: 30px;
-	background: #c0c0c0;
+	background: #F1DCF7;
 	border-width: 2px;
 	border-top-width: 3px;
 	border-left-width: 3px;
@@ -28,7 +33,7 @@ $font-main: "w95fa";
 	flex-grow: 1;
 	font-size: 16px;
 	letter-spacing: 1px;
-	font-family: $font-main;
+	font-family: "Dinkie";
 	overflow: hidden;
 	&.active {
 		outline-style: none;
@@ -38,7 +43,8 @@ $font-main: "w95fa";
 		position: relative;
 		top: 1px;
 		left: 1px;
-		background: url('../../assets/selectedBg.png');
+		// background: url('../../assets/selectedBg.png');
+		background-color: #D7C0DA;
 	}
 	&:active {
 		outline-style: none;
@@ -48,6 +54,12 @@ $font-main: "w95fa";
 		position: relative;
 		top: 1px;
 		left: 1px;
+	}
+	.icon {
+		background-color: #4E23CF;
+		margin: 2.5px 3px 2.5px 3px;
+		width: 16.5px;
+		height: 16.5px;
 	}
 	img {
 		height: 75%;
@@ -63,7 +75,7 @@ $font-main: "w95fa";
 .start {
 	margin: 2px 2px 2px 4px;
 	height: 30px;
-	background: #c0c0c0;
+	background: #F1DCF7;
 	border-width: 2px;
 	border-top-width: 3px;
 	border-left-width: 3px;
@@ -73,8 +85,8 @@ $font-main: "w95fa";
 	align-items: center;
 	font-size: 20px;
 	letter-spacing: 1px;
-	font-weight: bold;
-	font-family: $font-main;
+	font-weight: 400;
+	font-family: "Pixel";
 	&:active {
 		outline-style: none;
 		border-color: white;
@@ -90,7 +102,7 @@ $font-main: "w95fa";
 }
 
 .system-tray {
-	font-family: $font-main;
+	font-family: "Dinkie";
 	text-wrap: nowrap;
 	margin: 3px;
 	margin-top: 2px;
@@ -110,4 +122,5 @@ $font-main: "w95fa";
 	display: flex;
 	width: calc(100% - 88px - 96px);
 	height: 100%;
+	overflow: hidden;
 }

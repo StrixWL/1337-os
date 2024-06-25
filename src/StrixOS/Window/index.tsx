@@ -3,6 +3,8 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import { WindowProps, Sizes, Pos } from "../../utils/types";
 import WindowHeader from "./WindowHeader";
 
+const mouseDragAudio = new Audio("./audio/mousedrag.wav")
+
 interface WindowState {
 	sizes: Sizes;
 	startDrag: Pos;
@@ -10,12 +12,13 @@ interface WindowState {
 	cursor: string;
     maximized: boolean;
     lastMouseDownTime: number;
+	soundPlayed: boolean;
 }
 
 const Window = ({
-	backgroundColor = "#C0C0C0",
+	backgroundColor = "#8EF4E6",
 	resizeOffset = 5,
-	dragOffset = 30,
+	dragOffset = 35,
 	minWidth = 200,
 	minHeight = 200,
 	width = 510,
@@ -31,12 +34,13 @@ const Window = ({
 	resizable = true
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
-		sizes: { width, height, left: 300, top: 200 },
+		sizes: { width, height, left: 200, top: 100 },
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
         maximized: false,
-        lastMouseDownTime: 0
+        lastMouseDownTime: 0,
+		soundPlayed: false
 	});
 	const ref = useRef<HTMLDivElement>(null);
 	const handleMouseMove = (event: globalThis.MouseEvent) => {
@@ -72,6 +76,12 @@ const Window = ({
             if (ref.current!.style.cursor != cursor)
                 setState((prevState) => ({ ...prevState, cursor }));
 		} else {
+			let _sp = state.soundPlayed
+			if (state.soundPlayed == false) {
+				// ugly
+				mouseDragAudio.play()
+				_sp = true
+			}
 			let hDrag = event.clientX - state.startDrag.x;
 			let vDrag = event.clientY - state.startDrag.y;
 			const cursor = state.cursor;
@@ -169,7 +179,7 @@ const Window = ({
 					};
 					break;
 			}
-			setState((prevState) => ({ ...prevState, sizes: newSizes }));
+			setState((prevState) => ({ ...prevState, sizes: newSizes, soundPlayed: _sp }));
 		}
 	};
 	const handleMouseDown = function (event: MouseEvent<HTMLDivElement>) {
@@ -194,7 +204,7 @@ const Window = ({
 	const handleMouseUp = (event: globalThis.MouseEvent) => {
         if ((event.target as HTMLDivElement).id != "cursor-overlay")
             return;
-		setState((prevState) => ({ ...prevState, isDragging: false }));
+		setState((prevState) => ({ ...prevState, isDragging: false, soundPlayed: false }));
 	};
 
 	useEffect(() => {
@@ -204,24 +214,25 @@ const Window = ({
 			window.removeEventListener("mouseup", handleMouseUp);
 			window.removeEventListener("mousemove", handleMouseMove);
 		};
-	}, [state.isDragging]);
+	}, [state.isDragging, state.soundPlayed]);
 	return (
 		<div
 			id="window"
 			ref={ref}
 			style={removeHeader ? {
 				cursor: state.cursor,
-				left: "-6px",
-				top: "-27px",
+				left: "-9px",
+				top: "-37px",
 				zIndex: zIndex,
 				visibility: "hidden"
 			} : {
 				cursor: state.cursor,
-				height: state.maximized ? 'calc(100% - 24px)' : state.sizes.height,
-				width: state.maximized ? 'calc(100% + 2px)' : state.sizes.width,
-				left: state.maximized ? '-6px' : state.sizes.left,
-				top: state.maximized ? '-6px' : state.sizes.top,
-				backgroundColor,
+				height: state.maximized ? 'calc(100% - 42px)' : state.sizes.height,
+				width: state.maximized ? 'calc(100% - 5px)' : state.sizes.width,
+				left: state.maximized ? '-4px' : state.sizes.left,
+				top: state.maximized ? '-3px' : state.sizes.top,
+				backgroundColor: focused ? backgroundColor : "#DEDEDE",
+				boxShadow: focused ? "4px 4px 0px 0px rgba(176, 164, 233, 0.6)" : "none",
 				zIndex: zIndex,
 			}}
 			onMouseDown={handleMouseDown}
@@ -234,8 +245,11 @@ const Window = ({
 				}
 				icon={iconUrl || ''}
 				title={title}
+				focused={focused ?? true}
 			/>
-			<Component close={() => deleteSelf!()} />
+			<div className={styles['container']}>
+				<Component close={() => deleteSelf!()} />
+			</div>
 			{state.isDragging && (
 				<div
                     id="cursor-overlay"

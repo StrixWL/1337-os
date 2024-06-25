@@ -39,7 +39,7 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 		<div className={styles["Taskbar"]}>
 			<button className={styles["start"]}>
 				<img src={windowsIcon} />
-				Start
+				START
 			</button>
 			<div className={styles["opened-windows"]}>
 				{Object.keys(windows).map((key: string) => {
@@ -51,7 +51,8 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 							className={`${styles["window"]} ${window.id == windows.focus ? styles["active"] : ''}`}
 							onClick={() => focusWindow(window.id!)}
 						>
-							<img src={window.iconUrl}/>
+							<div className={styles['icon']}></div>
+							{/* <img src={window.iconUrl}/> */}
 							<span>{window.title}</span>
 						</button>
 					);

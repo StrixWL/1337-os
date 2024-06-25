@@ -1,10 +1,16 @@
+@font-face {
+	font-family: "zpix";
+	src: url("../../../assets/fonts/zpix.ttf") format("truetype");
+}
+
 .desktop-shortcut {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	color: white;
-	font-size: 11px;
+	color: #4D21CB;
+	font-weight: 600;
+	font-size: 12px;
 	position: absolute;
 	padding: 10px;
 	width: 60px;
@@ -17,7 +23,7 @@
 	}
 	span {
 		padding: 0 3px;
-		font-family: "Noto Sans";
+		font-family: "zpix";
 		text-align: center;
 	}
 }
@@ -31,7 +37,7 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-		background-color: blue;
+		background-color: pink;
 		width: 100%;
 		height: 100%;
 		opacity: 0.3;

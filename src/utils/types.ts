@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export type App = "TOF" | "PAINT" | "WINAMP" | "CALCULATOR" | "MINESWEEPER"
 
 export interface Pos {

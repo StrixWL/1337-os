@@ -49,8 +49,8 @@ const Calculator: WindowProps = {
     name: "Calculator",
     width: 300,
     height: 300,
-    minHeight: 250,
-    minWidth: 250,
+    minHeight: 260,
+    minWidth: 260,
     unique: false
 }
 
@@ -59,8 +59,8 @@ const Minesweeper: WindowProps = {
     iconUrl: MinesweeperIcon,
     title: "Minesweeper",
     name: "Minesweeper",
-    width: 278,
-    height: 340,
+    width: 288,
+    height: 342,
     unique: false,
     resizable: false
 }

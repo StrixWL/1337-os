@@ -1,48 +1,54 @@
 .window {
-    position: absolute;
-    overflow: hidden;
-    padding: 25px 4px 5px 4px;
-    border: 2px solid #424242;
-    border-color: #fff #424242 #424242 #fff;
-    &::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 1px;
-        // background-color: aquamarine;
-        top: 30px;
-        left: 0;
-    }
+	position: absolute;
+	overflow: hidden;
+	padding: 34px 4px 16px 4px;
+	border: 3px solid #4e23cf;
+	.container {
+		height: 100%;
+		border: 3px solid #4e23cf;
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		background-image: url("../../assets/dbg.png");
+		background-size: 56px;
+		background-position: top center;
+        bottom: 0;
+		background-repeat: no-repeat;
+		height: 7px;
+		width: 56px;
+	}
 }
 
 .cursor-overlay {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 214748364;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	z-index: 214748364;
 }
 
 .window-overlay {
-    cursor: default;
-    position: absolute;
-    top: 30px;
-    left: 6px;
-    height: calc(100% - 36px);
-    width: calc(100% - 12px);
+	cursor: default;
+	position: absolute;
+	top: 30px;
+	left: 6px;
+	height: calc(100% - 36px);
+	width: calc(100% - 12px);
 }
 
 // tmp
-.del-btn, .maximize-btn {
-    position: absolute;
-    right: 4px;
-    top: 4px;
+.del-btn,
+.maximize-btn {
+	position: absolute;
+	right: 4px;
+	top: 4px;
 }
 
 .maximize-btn {
-    right: 34px;
-    font-size: 13px;
-    padding: 0;
-    width: 25px;
+	right: 34px;
+	font-size: 13px;
+	padding: 0;
+	width: 25px;
 }
