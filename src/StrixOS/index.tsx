@@ -35,6 +35,7 @@ const reducer = (state: Windows, action: WindowsAction): Windows => {
 					[id]: {
 						...state[id!],
 						zIndex: newZIndex,
+						minimized: false
 					},
 				};
 			}

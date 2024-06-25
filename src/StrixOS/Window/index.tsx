@@ -253,7 +253,7 @@ const Window = ({
 				focused={focused ?? true}
 			/>
 			<div className={styles['container']}>
-				<Component close={() => deleteSelf!()} />
+				<Component close={() => deleteSelf!()} minimize={() => minimizeSelf!()} />
 			</div>
 			{state.isDragging && (
 				<div

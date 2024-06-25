@@ -3,11 +3,12 @@ import Webamp from "webamp";
 
 interface WinampComponent {
 	close?: () => void;
+	minimize?: () => void;
 }
 
 const closeAudio = new Audio("./audio/window_close.wav")
 
-const WinampComponent = ({ close }: WinampComponent) => {
+const WinampComponent = ({ close, minimize }: WinampComponent) => {
 	useEffect(() => {
 		const webamp = new Webamp({
 			initialTracks: [
@@ -53,6 +54,9 @@ const WinampComponent = ({ close }: WinampComponent) => {
 			closeAudio.play()
 			close!();
 		});
+		webamp.onMinimize(() => {
+			minimize!()
+		})
 	}, []);
 	return (
 		<div

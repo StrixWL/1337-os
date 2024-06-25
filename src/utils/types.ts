@@ -35,7 +35,7 @@ export interface WindowProps {
 	title?: string;
 	iconUrl?: string;
 	name?: string;
-	Component?: ({}: {close?: () => void}) => JSX.Element;
+	Component?: ({}: {close?: () => void, minimize?: () => void}) => JSX.Element;
 	removeHeader?: boolean;
 	unique?: boolean;
 	resizable?: boolean;
