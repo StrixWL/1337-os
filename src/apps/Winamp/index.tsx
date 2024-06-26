@@ -19,6 +19,34 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 					},
 					url: "/songs/freegames-dot-com.mp3",
 				},
+				{
+					metaData: {
+						artist: "4get",
+						title: "MYHEADDONTFEELRIGHT",
+					},
+					url: "/songs/MYHEADDONTFEELRIGHT.mp3",
+				},
+				{
+					metaData: {
+						artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
+						title: "LOTTERY",
+					},
+					url: "/songs/LOTTERY.mp3",
+				},
+				{
+					metaData: {
+						artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
+						title: "PSYCHODREAMS",
+					},
+					url: "/songs/PSYCHODREAMS.mp3",
+				},
+				{
+					metaData: {
+						artist: "BalanceBreaker",
+						title: "Omoi - Teo (Frenchcore)",
+					},
+					url: "/songs/Omoi - Teo.mp3",
+				},
 			],
 			availableSkins: [
 				{
@@ -27,27 +55,51 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 				},
 				{
 					url: "/webamp/themes/lainamp.ZIP",
-					name: "lain 2 (default)",
+					name: "lain 2",
+				},
+				{
+					url: "/webamp/themes/s_Lain_Amp.wsz",
+					name: "lain 3",
+				},
+				{
+					url: "/webamp/themes/Angel.wsz",
+					name: "angel",
+				},
+				{
+					url: "/webamp/themes/Pretty_Pink_Sakura.wsz",
+					name: "sakura kinomoto",
 				},
 				{
 					url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
-					name: "rei",
+					name: "rei 1 (default)",
+				},
+				{
+					url: "/webamp/themes/rei_moon.wsz",
+					name: "rei 2",
 				},
 				{
 					url: "/webamp/themes/bd3bf6250ffd41012a07e0601bb0fb4c.wsz",
-					name: "-",
+					name: "parasite eve",
+				},
+				{
+					url: "/webamp/themes/chobits_chii.zip",
+					name: "chobits chii",
 				}
 			],
 			initialSkin: {
-				url: "/webamp/themes/lainamp.ZIP",
+				// url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
+				url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
 			},
-			zIndex: 214748364,
+			zIndex: 214748364
 		});
 		const webampElem = document.getElementById("winamp") as HTMLDivElement;
 		webamp.renderWhenReady(webampElem).then(() => {
 			webampElem.appendChild(
 				document.getElementById("webamp") as HTMLDivElement
 			);
+			setTimeout(() => {
+				webamp.play()
+			}, 2000)
 		});
 		webamp.onClose(() => {
 			webamp.dispose();
