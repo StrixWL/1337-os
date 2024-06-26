@@ -3,11 +3,13 @@ import ToFComponent from './ToF'
 import WinampComponent from './Winamp'
 import CalculatorComponent from './Calculator'
 import MinesweeperComponent from './Minesweeper'
+import ComputerComponent from './Computer'
 import { WindowProps } from '../utils/types'
 import paintIcon from "../assets/paint.png"
 import TofIcon from "../assets/tof.png"
 import WinampIcon from "../assets/winamp.png"
 import CalculatorIcon from "../assets/calculator.png"
+import ComputerIcon from "../assets/computer.png"
 import MinesweeperIcon from "../assets/minesweeper.png"
 
 // preloading img so that it immediately shows up when user opens a window
@@ -65,12 +67,26 @@ const Minesweeper: WindowProps = {
     resizable: false
 }
 
+const Computer: WindowProps = {
+    Component: ComputerComponent,
+    iconUrl: ComputerIcon,
+    title: "Strix OS",
+    name: "Strix OS",
+    width: 300,
+    height: 300,
+    minHeight: 260,
+    minWidth: 260,
+    unique: false,
+    maximized: true
+}
+
 const Apps = {
-	"PAINT": Paint,
-	"TOF": ToF,
+    "PAINT": Paint,
 	"WINAMP": Winamp,
+	"TOF": ToF,
+    "STRIXOS": Computer,
 	"CALCULATOR": Calculator,
-	"MINESWEEPER": Minesweeper
+	"MINESWEEPER": Minesweeper,
 }
 
 export default Apps

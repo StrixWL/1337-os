@@ -33,6 +33,7 @@ const Window = ({
 	title = "",
 	removeHeader = false,
 	resizable = true,
+	maximized = false,
 	minimized = false
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
@@ -40,7 +41,7 @@ const Window = ({
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
-        maximized: false,
+        maximized: maximized,
         lastMouseDownTime: 0,
 		soundPlayed: false
 	});

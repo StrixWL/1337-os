@@ -1,4 +1,4 @@
-export type App = "TOF" | "PAINT" | "WINAMP" | "CALCULATOR" | "MINESWEEPER"
+export type App = "TOF" | "PAINT" | "WINAMP" | "CALCULATOR" | "MINESWEEPER" | "STRIXOS"
 
 export interface Pos {
 	x: number;
@@ -39,6 +39,7 @@ export interface WindowProps {
 	removeHeader?: boolean;
 	unique?: boolean;
 	resizable?: boolean;
+	maximized?: boolean;
 	minimized?: boolean;
 }
 
