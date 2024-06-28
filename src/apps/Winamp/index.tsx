@@ -12,40 +12,82 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 	useEffect(() => {
 		const webamp = new Webamp({
 			initialTracks: [
+				// {
+				// 	metaData: {
+				// 		artist: "mynamefishy",
+				// 		title: "freegames-dot-com",
+				// 	},
+				// 	url: "/songs/freegames-dot-com.mp3",
+				// },
+				// {
+				// 	metaData: {
+				// 		artist: "4get",
+				// 		title: "MYHEADDONTFEELRIGHT",
+				// 	},
+				// 	url: "/songs/MYHEADDONTFEELRIGHT.mp3",
+				// },
+				// {
+				// 	metaData: {
+				// 		artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
+				// 		title: "LOTTERY",
+				// 	},
+				// 	url: "/songs/LOTTERY.mp3",
+				// },
+				// {
+				// 	metaData: {
+				// 		artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
+				// 		title: "PSYCHODREAMS",
+				// 	},
+				// 	url: "/songs/PSYCHODREAMS.mp3",
+				// },
+				// {
+				// 	metaData: {
+				// 		artist: "BalanceBreaker",
+				// 		title: "Omoi - Teo (Frenchcore)",
+				// 	},
+				// 	url: "/songs/Omoi - Teo.mp3",
+				// },
 				{
 					metaData: {
-						artist: "mynamefishy",
-						title: "freegames-dot-com",
+						artist: "baatoonn",
+						title: "Kiss me again",
 					},
-					url: "/songs/freegames-dot-com.mp3",
+					url: "/songs/x/1.mp3",
 				},
 				{
 					metaData: {
-						artist: "4get",
-						title: "MYHEADDONTFEELRIGHT",
+						artist: "herowhither",
+						title: "Truth",
 					},
-					url: "/songs/MYHEADDONTFEELRIGHT.mp3",
+					url: "/songs/x/2.mp3",
 				},
 				{
 					metaData: {
-						artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
-						title: "LOTTERY",
+						artist: "herowhither",
+						title: "World",
 					},
-					url: "/songs/LOTTERY.mp3",
+					url: "/songs/x/3.mp3",
+				},
+				// {
+				// 	metaData: {
+				// 		artist: "herowhither",
+				// 		title: "Together",
+				// 	},
+				// 	url: "/songs/x/6.mp3",
+				// },
+				{
+					metaData: {
+						artist: "blooz",
+						title: "Broken",
+					},
+					url: "/songs/x/4.mp3",
 				},
 				{
 					metaData: {
-						artist: "𝐱𝐧𝟖𝟖𝐚𝐱",
-						title: "PSYCHODREAMS",
+						artist: "roi",
+						title: "Videoclub instrumental (slowed)",
 					},
-					url: "/songs/PSYCHODREAMS.mp3",
-				},
-				{
-					metaData: {
-						artist: "BalanceBreaker",
-						title: "Omoi - Teo (Frenchcore)",
-					},
-					url: "/songs/Omoi - Teo.mp3",
+					url: "/songs/x/5.mp3",
 				},
 			],
 			availableSkins: [
@@ -78,6 +120,10 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 					name: "rei 2",
 				},
 				{
+					url: "/webamp/themes/Asuka_MysticAMP.wsz",
+					name: "asuka",
+				},
+				{
 					url: "/webamp/themes/bd3bf6250ffd41012a07e0601bb0fb4c.wsz",
 					name: "parasite eve",
 				},
@@ -87,7 +133,6 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 				}
 			],
 			initialSkin: {
-				// url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
 				url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
 			},
 			zIndex: 214748364
@@ -97,9 +142,9 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 			webampElem.appendChild(
 				document.getElementById("webamp") as HTMLDivElement
 			);
-			setTimeout(() => {
-				webamp.play()
-			}, 2000)
+			// setTimeout(() => {
+			// 	webamp.play()
+			// }, 2000)
 		});
 		webamp.onClose(() => {
 			webamp.dispose();
