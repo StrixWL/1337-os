@@ -113,7 +113,7 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 				},
 				{
 					url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
-					name: "rei 1 (default)",
+					name: "rei 1",
 				},
 				{
 					url: "/webamp/themes/rei_moon.wsz",
@@ -132,9 +132,9 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 					name: "chobits chii",
 				}
 			],
-			initialSkin: {
-				url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
-			},
+			// initialSkin: {
+			// 	url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
+			// },
 			zIndex: 214748364
 		});
 		const webampElem = document.getElementById("winamp") as HTMLDivElement;
