@@ -120,7 +120,7 @@ const StrixOS = () => {
 	return (
 		<div
 			style={{
-				height: "100vh",
+				height: "100svh",
 				display: "flex",
 				flexDirection: "column",
 			}}
