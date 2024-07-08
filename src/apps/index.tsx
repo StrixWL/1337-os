@@ -4,6 +4,7 @@ import WinampComponent from './Winamp'
 import CalculatorComponent from './Calculator'
 import MinesweeperComponent from './Minesweeper'
 import ComputerComponent from './Computer'
+import VirusComponent from './Virus'
 import { WindowProps } from '../utils/types'
 import paintIcon from "../assets/paint.png"
 import TofIcon from "../assets/tof.png"
@@ -11,6 +12,7 @@ import WinampIcon from "../assets/winamp.png"
 import CalculatorIcon from "../assets/calculator.png"
 import ComputerIcon from "../assets/imac.png"
 import MinesweeperIcon from "../assets/minesweeper.png"
+import VirusIcon from "../assets/virus.png"
 
 // preloading img so that it immediately shows up when user opens a window
 const img = new Image()
@@ -56,6 +58,18 @@ const Calculator: WindowProps = {
     unique: false
 }
 
+const Virus: WindowProps = {
+    Component: VirusComponent,
+    iconUrl: VirusIcon,
+    title: "Virus",
+    name: "Virus",
+    width: 300,
+    height: 300,
+    minHeight: 260,
+    minWidth: 260,
+    unique: false
+}
+
 const Minesweeper: WindowProps = {
     Component: MinesweeperComponent,
     iconUrl: MinesweeperIcon,
@@ -86,6 +100,7 @@ const Apps = {
 	// "TOF": ToF,
     "STRIXOS": Computer,
 	"CALCULATOR": Calculator,
+    "VIRUS": Virus,
 	"MINESWEEPER": Minesweeper,
 }
 
