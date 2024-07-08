@@ -9,7 +9,7 @@ import paintIcon from "../assets/paint.png"
 import TofIcon from "../assets/tof.png"
 import WinampIcon from "../assets/winamp.png"
 import CalculatorIcon from "../assets/calculator.png"
-import ComputerIcon from "../assets/computer.png"
+import ComputerIcon from "../assets/imac.png"
 import MinesweeperIcon from "../assets/minesweeper.png"
 
 // preloading img so that it immediately shows up when user opens a window
@@ -70,8 +70,8 @@ const Minesweeper: WindowProps = {
 const Computer: WindowProps = {
     Component: ComputerComponent,
     iconUrl: ComputerIcon,
-    title: "Strix OS",
-    name: "Strix OS",
+    title: "1337 OS",
+    name: "1337 OS",
     width: 300,
     height: 300,
     minHeight: 260,
@@ -83,7 +83,7 @@ const Computer: WindowProps = {
 const Apps = {
     "PAINT": Paint,
 	"WINAMP": Winamp,
-	"TOF": ToF,
+	// "TOF": ToF,
     "STRIXOS": Computer,
 	"CALCULATOR": Calculator,
 	"MINESWEEPER": Minesweeper,

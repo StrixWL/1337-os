@@ -2,21 +2,21 @@
 	position: absolute;
 	overflow: hidden;
 	padding: 34px 4px 16px 4px;
-	border: 3px solid #4e23cf;
+	border: 3px solid white;
 	.container {
 		height: 100%;
-		border: 3px solid #4e23cf;
+		border: 3px solid white;
 	}
 	&::after {
 		content: "";
 		position: absolute;
-		background-image: url("../../assets/dbg.png");
-		background-size: 56px;
-		background-position: top center;
-        bottom: 0;
+		background-image: url("../../assets/1337_c.png");
+		background-size: 32px;
+		background-position: bottom center;
+        bottom: 2px;
 		background-repeat: no-repeat;
-		height: 7px;
-		width: 56px;
+		height: 30px;
+		width: 50px;
 	}
 }
 

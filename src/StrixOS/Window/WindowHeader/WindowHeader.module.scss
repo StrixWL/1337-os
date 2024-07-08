@@ -4,8 +4,8 @@
 	left: 4px;
 	height: 23px;
 	width: calc(100% - 13px);
-	color: #4E23CF;
-    border: 3px solid #4E23CF;
+	color: black;
+    border: 3px solid black;
 	display: flex;
 	h1 {
 		font-size: 12px;
@@ -20,7 +20,7 @@
 		text-wrap: nowrap;
 	}
 	.icon {
-		background-color: #4E23CF;
+		background-color: black;
 		margin: 2.5px 0 2.5px 3px;
 		min-width: 18px;
 	}
@@ -43,17 +43,28 @@ button:focus {
 		background-color: transparent;
 		border: none;
 		background-size: cover;
-		&:hover {
+		&:hover::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 			background-color: #e599ee;
+			opacity: .2;
+			filter: none;
 		}
 	}
     .minimize-btn {
+		filter: brightness(0%);
 		background-image: url("../../../assets/minimize.png");
     }
     .maximize-btn {
+		filter: brightness(0%);
 		background-image: url("../../../assets/maximize.png");
     }
     .close-btn {
+		filter: brightness(0%);
 		background-image: url("../../../assets/button_close.png");
     }
 }
