@@ -1,4 +1,4 @@
-export type App = "TOF" | "PAINT" | "WINAMP" | "CALCULATOR" | "MINESWEEPER" | "STRIXOS"
+export type App = "PAINT" | "WINAMP" | "STRIXOS" | "CALCULATOR" | "MINESWEEPER" | "VIRUS"
 
 export interface Pos {
 	x: number;

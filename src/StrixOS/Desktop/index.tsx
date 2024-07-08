@@ -7,8 +7,39 @@ import Apps from "../../apps";
 
 interface Desktop {
 	children?: ReactNode;
-	launchApp: (name: App) => void
+	launchApp: (name: App) => void;
 }
+
+const getApps = (unselectAll: () => void, launchApp: (name: App) => void) => {
+	const windowHeight = window.innerHeight;
+	let currentLeft = 34;
+	let currentTop = 30;
+
+	const apps = Object.keys(Apps).map((key, i) => {
+		const app = Apps[key as keyof typeof Apps];
+
+		if (currentTop + 90 > windowHeight) {
+			currentLeft += 100;
+			currentTop = 30;
+		}
+		const appData = {
+			name: app.name || "Untitled",
+			iconUrl: app.iconUrl || "",
+			left: currentLeft,
+			top: currentTop,
+			selected: false,
+			launch: () => {
+				unselectAll();
+				launchApp(key as keyof typeof Apps);
+			},
+		};
+
+		currentTop += 90;
+		return appData;
+	});
+
+	return apps;
+};
 
 // sc = shortcut
 const Desktop = ({ children, launchApp }: Desktop) => {
@@ -25,31 +56,16 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 		isDragging: false,
 	});
 	const unselectAll = () => {
-		setShortCuts(prevState => {
-			const _shortCuts = prevState.map(shortcut => {
-				const _shortcut = {...shortcut}
-				_shortcut.selected = false
-				return _shortcut
-			})
-			return _shortCuts
-		})
-	}
-	const [shortCuts, setShortCuts] = useState(
-		Object.keys(Apps).map((key, i) => {
-			const app = Apps[key as keyof typeof Apps]
-			return {
-				name: app.name || 'Untitled',
-				iconUrl: app.iconUrl || '',
-				left: 34,
-				top: 30 + 90 * i,
-				selected: false,
-				launch: () => {
-					unselectAll(),
-					launchApp(key as keyof typeof Apps)
-				}
-			}
-		})
-	);
+		setShortCuts((prevState) => {
+			const _shortCuts = prevState.map((shortcut) => {
+				const _shortcut = { ...shortcut };
+				_shortcut.selected = false;
+				return _shortcut;
+			});
+			return _shortCuts;
+		});
+	};
+	const [shortCuts, setShortCuts] = useState(getApps(unselectAll, launchApp));
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
 		window.addEventListener("mousemove", handleMouseMove);
