@@ -20,7 +20,7 @@ const WindowHeader = ({ close, maximize, minimize, title, focused }: WindowHeade
 	return (
 		<header
 			style={{
-				backgroundColor: focused ? "#F0D3EC" : "#DEDEDE"
+				backgroundColor: focused ? "white" : "#DEDEDE"
 			}}
 			id="window-header"
 			className={styles["window-header"]}

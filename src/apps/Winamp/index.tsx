@@ -113,7 +113,7 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 				},
 				{
 					url: "/webamp/themes/Rei_Ayanami_NGE.wsz",
-					name: "rei 1 (default)",
+					name: "rei 1",
 				},
 				{
 					url: "/webamp/themes/rei_moon.wsz",

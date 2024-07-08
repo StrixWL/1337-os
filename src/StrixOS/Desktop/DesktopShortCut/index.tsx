@@ -98,7 +98,7 @@ const DesktopShortCut = ({
 			<span
 				className="shortcut"
 				style={{
-					backgroundColor: selected ? "rgba(255, 192, 203, 0.6)" : "transparent",
+					backgroundColor: selected ? "rgba(128, 128, 128, 1)" : "transparent",
 				}}
 			>
 				{name}

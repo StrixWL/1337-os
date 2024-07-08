@@ -16,7 +16,7 @@ interface WindowState {
 }
 
 const Window = ({
-	backgroundColor = "#8EF4E6",
+	backgroundColor = "black",
 	resizeOffset = 5,
 	dragOffset = 35,
 	minWidth = 200,
@@ -172,7 +172,7 @@ const Window = ({
 				case "default":
 					if (!state.maximized && state.soundPlayed == false) {
 						// ugly
-						mouseDragAudio.play()
+						// mouseDragAudio.play()
 						_sp = true
 					}
 					newSizes = {
