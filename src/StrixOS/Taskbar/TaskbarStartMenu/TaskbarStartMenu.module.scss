@@ -1,0 +1,57 @@
+.menu {
+	position: absolute;
+	left: 5px;
+	margin: 0;
+	padding: 0;
+	bottom: 37px;
+	display: flex;
+	gap: 1.5px;
+	list-style-type: none;
+	flex-direction: column-reverse;
+	background-color: gray;
+	&::before {
+		content: "";
+		position: absolute;
+		left: -5px;
+		width: 9px;
+		background: gray;
+		height: 100%;
+	}
+    &::after {
+		content: "";
+        background-image: url('../../../assets/1337.svg');
+        background-position: center;
+        background-size: cover;
+        position: absolute;
+        width: 44px;
+        height: 12px;
+        left: -22.5px;
+        top: 10px;
+        transform: rotate(-90deg) scale(.5);
+    }
+	button {
+		font-family: "Pixel";
+		width: 170px;
+		height: 44px;
+		border: none;
+		border-top: 2px solid black;
+		border-left: 2px solid black;
+		background: white;
+		border-width: 2px;
+		border-top-width: 3px;
+		border-left-width: 3px;
+		border-color: #80808043 #808080 #808080 #80808043;
+		letter-spacing: 1px;
+        &:active {
+            outline-style: none;
+            border-color: black;
+            border-top-color: #808080c6;
+            border-left-color: #808080c6;
+            span {
+                position: relative;
+                top: 1px;
+                left: 1px;
+            }
+        }
+	}
+}

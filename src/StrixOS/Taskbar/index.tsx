@@ -2,6 +2,7 @@ import styles from "./Taskbar.module.scss";
 import windowsIcon from "../../assets/win.png";
 import { useEffect, useState } from "react";
 import { Windows } from "../../utils/types";
+import TaskbarStartMenu from "./TaskbarStartMenu/TaskbarStartMenu";
 
 const getTime = () => {
 	const date = new Date();
@@ -35,12 +36,18 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 			}, 60000);
 		}, 60000 - seconds * 1000);
 	}, []);
+
+	const [displayStart, setDisplayStart] = useState(false);
+
+	const toggleStart = () => setDisplayStart(!displayStart);
+
 	return (
 		<div className={styles["Taskbar"]}>
-			<button className={styles["start"]}>
+			<button id="start-btn" onClick={toggleStart} className={styles["start"]}>
 				<img src={windowsIcon} />
 				START
 			</button>
+			{displayStart && <TaskbarStartMenu toggleStart={toggleStart} />}
 			<div className={styles["opened-windows"]}>
 				{Object.keys(windows).map((key: string) => {
 					const window = windows[parseInt(key)];
@@ -48,10 +55,14 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 					return (
 						<button
 							key={key}
-							className={`${styles["window"]} ${window.id == windows.focus && !window.minimized ? styles["active"] : ''}`}
+							className={`${styles["window"]} ${
+								window.id == windows.focus && !window.minimized
+									? styles["active"]
+									: ""
+							}`}
 							onClick={() => focusWindow(window.id!)}
 						>
-							<div className={styles['icon']}></div>
+							<div className={styles["icon"]}></div>
 							{/* <img src={window.iconUrl}/> */}
 							<span>{window.title}</span>
 						</button>
