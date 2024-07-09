@@ -1,16 +1,7 @@
-import { useEffect, useRef } from "react";
-
 const Minesweeper = () => {
-	const ref = useRef<HTMLIFrameElement>(null)
-	useEffect(() => {
-		setTimeout(() => {
-			const iframe = ref.current!.contentDocument || ref.current!.contentWindow!.document
-			console.log(iframe.getElementById('play_area'))
-		}, 2000)
-	}, [])
 	return (
-		<iframe ref={ref}
-			src="https://98.js.org/programs/minesweeper/"
+		<iframe
+			src="minesweeper/index.html"
 			title="minesweeper"
 			style={{
 				width: "100%",

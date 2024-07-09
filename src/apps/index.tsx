@@ -65,8 +65,8 @@ const Minesweeper: WindowProps = {
     iconUrl: MinesweeperIcon,
     title: "Minesweeper",
     name: "Minesweeper",
-    width: 288,
-    height: 342,
+    width: 284,
+    height: 320,
     unique: false,
     resizable: false
 }
