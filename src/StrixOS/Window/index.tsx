@@ -3,7 +3,7 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 import { WindowProps, Sizes, Pos } from "../../utils/types";
 import WindowHeader from "./WindowHeader";
 
-const mouseDragAudio = new Audio("./audio/mousedrag.wav")
+// const mouseDragAudio = new Audio("./audio/mousedrag.wav")
 
 interface WindowState {
 	sizes: Sizes;

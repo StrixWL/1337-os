@@ -15,7 +15,7 @@ const getApps = (unselectAll: () => void, launchApp: (name: App) => void) => {
 	let currentLeft = 34;
 	let currentTop = 30;
 
-	const apps = Object.keys(Apps).map((key, i) => {
+	const apps = Object.keys(Apps).map((key) => {
 		const app = Apps[key as keyof typeof Apps];
 
 		if (currentTop + 90 > windowHeight) {
