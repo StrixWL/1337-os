@@ -1,4 +1,12 @@
+import Webamp from "webamp";
+
 export type App = "PAINT" | "WINAMP" | "STRIXOS" | "CALCULATOR" | "MINESWEEPER" | "VIRUS"
+
+declare global {
+    interface Window {
+        webamp: Webamp;
+    }
+}
 
 export interface Pos {
 	x: number;

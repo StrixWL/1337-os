@@ -36,6 +36,7 @@ const buttons = [
 			root.style.transition = "all .7s ease-in";
 			root.style.opacity = "0";
 			root.style.transform = "scale(0)";
+			window.webamp.close()
 		},
 	},
 	{

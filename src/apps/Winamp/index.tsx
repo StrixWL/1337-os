@@ -10,7 +10,7 @@ const closeAudio = new Audio("./audio/window_close.wav")
 
 const WinampComponent = ({ close, minimize }: WinampComponent) => {
 	useEffect(() => {
-		const webamp = new Webamp({
+		window.webamp = new Webamp({
 			initialTracks: [
 				// {
 				// 	metaData: {
@@ -138,7 +138,7 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 			zIndex: 214748364
 		});
 		const webampElem = document.getElementById("winamp") as HTMLDivElement;
-		webamp.renderWhenReady(webampElem).then(() => {
+		window.webamp.renderWhenReady(webampElem).then(() => {
 			webampElem.appendChild(
 				document.getElementById("webamp") as HTMLDivElement
 			);
@@ -146,14 +146,14 @@ const WinampComponent = ({ close, minimize }: WinampComponent) => {
 			// 	webamp.play()
 			// }, 2000)
 		});
-		webamp.onClose(() => {
-			webamp.dispose();
-			closeAudio.play()
+		window.webamp.onClose(() => {
+			window.webamp.dispose();
+			closeAudio.play();
 			close!();
 		});
-		webamp.onMinimize(() => {
-			minimize!()
-		})
+		window.webamp.onMinimize(() => {
+			minimize!();
+		});
 	}, []);
 	return (
 		<div
