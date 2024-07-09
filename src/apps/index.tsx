@@ -1,5 +1,4 @@
 import PaintComponent from './Paint'
-import ToFComponent from './ToF'
 import WinampComponent from './Winamp'
 import CalculatorComponent from './Calculator'
 import MinesweeperComponent from './Minesweeper'
@@ -7,7 +6,6 @@ import ComputerComponent from './Computer'
 import VirusComponent from './Virus'
 import { WindowProps } from '../utils/types'
 import paintIcon from "../assets/paint.png"
-import TofIcon from "../assets/tof.png"
 import WinampIcon from "../assets/winamp.png"
 import CalculatorIcon from "../assets/calculator.png"
 import ComputerIcon from "../assets/imac.png"
@@ -27,14 +25,6 @@ const Paint: WindowProps = {
     title: "Untitled - Paint",
     name: 'Paint',
     unique: false
-}
-
-const ToF: WindowProps = {
-    Component: ToFComponent,
-    title: "Tower Of Fantasy Clone",
-    iconUrl: TofIcon,
-    name: "Tower Of Fantasy",
-    unique: false,
 }
 
 const Winamp: WindowProps = {
@@ -97,7 +87,6 @@ const Computer: WindowProps = {
 const Apps = {
     "PAINT": Paint,
 	"WINAMP": Winamp,
-	// "TOF": ToF,
     "STRIXOS": Computer,
 	"CALCULATOR": Calculator,
     "VIRUS": Virus,
