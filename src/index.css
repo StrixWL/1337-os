@@ -5,6 +5,7 @@ body {
     -ms-user-select: none;
     user-select: none; 
     overflow: hidden;
+    background-color: black;
 }
 
 #root {

@@ -117,6 +117,12 @@ const StrixOS = () => {
 			props: { id },
 		});
 	};
+	const deleteWindow = (id: number) => {
+		dispatch({
+			type: "DELETE",
+			props: { id },
+		});
+	};
 	return (
 		<div
 			style={{
@@ -152,7 +158,7 @@ const StrixOS = () => {
 					);
 				})}
 			</Desktop>
-			<Taskbar windows={windows} focusWindow={focusWindow} />
+			<Taskbar windows={windows} focusWindow={focusWindow} deleteWindow={deleteWindow} />
 		</div>
 	);
 };

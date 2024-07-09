@@ -22,10 +22,20 @@ const getTime = () => {
 interface Taskbar {
 	windows: Windows;
 	focusWindow: (id: number) => void;
+	deleteWindow: (id: number) => void;
 }
 
-const Taskbar = ({ windows, focusWindow }: Taskbar) => {
+const Taskbar = ({ windows, focusWindow, deleteWindow }: Taskbar) => {
 	const [time, setTime] = useState(getTime());
+
+	const closeAll = () => {
+		Object.keys(windows).forEach(key => {
+			const window = windows[parseInt(key)]
+			if (window) {
+				deleteWindow(window.id!)
+			}
+		})
+	}
 	useEffect(() => {
 		const date = new Date();
 		let seconds = date.getSeconds();
@@ -47,7 +57,7 @@ const Taskbar = ({ windows, focusWindow }: Taskbar) => {
 				<img src={windowsIcon} />
 				START
 			</button>
-			{displayStart && <TaskbarStartMenu toggleStart={toggleStart} />}
+			{displayStart && <TaskbarStartMenu closeAll={closeAll} toggleStart={toggleStart} />}
 			<div className={styles["opened-windows"]}>
 				{Object.keys(windows).map((key: string) => {
 					const window = windows[parseInt(key)];
