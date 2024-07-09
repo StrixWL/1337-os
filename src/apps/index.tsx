@@ -41,9 +41,9 @@ const Calculator: WindowProps = {
     iconUrl: CalculatorIcon,
     title: "Calculator",
     name: "Calculator",
-    width: 300,
-    height: 300,
-    minHeight: 260,
+    width: 320,
+    height: 390,
+    minHeight: 320,
     minWidth: 260,
     unique: false
 }
