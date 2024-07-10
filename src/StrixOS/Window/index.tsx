@@ -1,5 +1,7 @@
+/* still needs lot of refactoring :( */
+
 import styles from "./Window.module.scss";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import { WindowProps, Sizes, Pos } from "../../utils/types";
 import WindowHeader from "./WindowHeader";
 
@@ -10,8 +12,8 @@ interface WindowState {
 	startDrag: Pos;
 	isDragging: boolean;
 	cursor: string;
-    maximized: boolean;
-    lastMouseDownTime: number;
+	maximized: boolean;
+	lastMouseDownTime: number;
 	soundPlayed: boolean;
 }
 
@@ -27,61 +29,71 @@ const Window = ({
 	focus,
 	deleteSelf,
 	minimizeSelf,
-    focused,
+	focused,
 	zIndex = 1,
 	iconUrl,
 	title = "",
 	removeHeader = false,
 	resizable = true,
 	maximized = false,
-	minimized = false
+	minimized = false,
 }: WindowProps) => {
 	const [state, setState] = useState<WindowState>({
-		sizes: { width, height, left: 200, top: 100 },
+		sizes: { width, height, left: window.innerWidth / 10, top: window.innerHeight / 10 },
 		startDrag: { x: 0, y: 0 },
 		isDragging: false,
 		cursor: "auto",
-        maximized: maximized,
-        lastMouseDownTime: 0,
-		soundPlayed: false
+		maximized: maximized,
+		lastMouseDownTime: 0,
+		soundPlayed: false,
 	});
 	const ref = useRef<HTMLDivElement>(null);
-	const handleMouseMove = (event: globalThis.MouseEvent) => {
-		if (!state.isDragging) {
-			const boundingRect = ref.current!.getBoundingClientRect();
-			const left = event.clientX - boundingRect.left;
-			const top = event.clientY - boundingRect.top;
-			const right = boundingRect.width - left;
-			const bottom = boundingRect.height - top;
 
-			let cursor = "auto";
-			if (!resizable)
-                cursor = "default";
-			else if (top < resizeOffset && left < resizeOffset)
-                cursor = "nw-resize";
-			else if (bottom < resizeOffset && left < resizeOffset)
-				cursor = "sw-resize";
-			else if (bottom < resizeOffset && right < resizeOffset)
-				cursor = "se-resize";
-			else if (top < resizeOffset && right < resizeOffset)
-				cursor = "ne-resize";
-			else if (top < resizeOffset)
-                cursor = "n-resize";
-			else if (left < resizeOffset)
-                cursor = "w-resize";
-			else if (bottom < resizeOffset)
-                cursor = "s-resize";
-			else if (right < resizeOffset)
-                cursor = "e-resize";
-			else if (top < dragOffset)
-                cursor = "default";
+	const getCursor = (clientX: number, clientY: number) => {
+		const boundingRect = ref.current!.getBoundingClientRect();
+		const left = clientX - boundingRect.left;
+		const top = clientY - boundingRect.top;
+		const right = boundingRect.width - left;
+		const bottom = boundingRect.height - top;
 
-            if (ref.current!.style.cursor != cursor)
-                setState((prevState) => ({ ...prevState, cursor }));
+		let cursor = ref.current!.style.cursor;
+		if (!resizable) cursor = "default";
+		else if (top < resizeOffset && left < resizeOffset)
+			cursor = "nw-resize";
+		else if (bottom < resizeOffset && left < resizeOffset)
+			cursor = "sw-resize";
+		else if (bottom < resizeOffset && right < resizeOffset)
+			cursor = "se-resize";
+		else if (top < resizeOffset && right < resizeOffset)
+			cursor = "ne-resize";
+		else if (top < resizeOffset) cursor = "n-resize";
+		else if (left < resizeOffset) cursor = "w-resize";
+		else if (bottom < resizeOffset) cursor = "s-resize";
+		else if (right < resizeOffset) cursor = "e-resize";
+		else if (top < dragOffset) cursor = "default";
+
+		return cursor;
+	};
+	const handleMouseMove = (
+		event: globalThis.MouseEvent | globalThis.TouchEvent
+	) => {
+		let clientX, clientY;
+		if (event instanceof globalThis.TouchEvent) {
+			clientX = event.changedTouches[0].clientX;
+			clientY = event.changedTouches[0].clientY;
 		} else {
-			let _sp = state.soundPlayed
-			let hDrag = event.clientX - state.startDrag.x;
-			let vDrag = event.clientY - state.startDrag.y;
+			clientX = event.clientX;
+			clientY = event.clientY;
+		}
+		if (!state.isDragging) {
+			let cursor = getCursor(clientX, clientY);
+
+			if (ref.current!.style.cursor != cursor)
+				setState((prevState) => ({ ...prevState, cursor }));
+		} else {
+			let _sp = state.soundPlayed;
+			let hDrag = clientX - state.startDrag.x;
+			let vDrag = clientY - state.startDrag.y;
 			const cursor = state.cursor;
 
 			let newSizes = { ...state.sizes };
@@ -173,7 +185,7 @@ const Window = ({
 					if (!state.maximized && state.soundPlayed == false) {
 						// ugly
 						// mouseDragAudio.play()
-						_sp = true
+						_sp = true;
 					}
 					newSizes = {
 						...state.sizes,
@@ -182,97 +194,161 @@ const Window = ({
 					};
 					break;
 			}
-			setState((prevState) => ({ ...prevState, sizes: newSizes, soundPlayed: _sp }));
+			setState((prevState) => ({
+				...prevState,
+				sizes: newSizes,
+				soundPlayed: _sp,
+			}));
 		}
 	};
-	const handleMouseDown = function (event: MouseEvent<HTMLDivElement>) {
-        // focus! >:(
-        focus!();
-        if ((event.target as HTMLDivElement).id == "window-control-btn")
-            return;
-        const time = (new Date()).getTime()
-        const delta = time - state.lastMouseDownTime
+
+	const handleMouseDown = function (
+		event: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>
+	) {
+		let clientX, clientY;
+		let cursor = "default";
+		console.log(event.type);
+		if (event.type == "touchstart") {
+			clientX = (event as TouchEvent<HTMLDivElement>).changedTouches[0]
+				.clientX;
+			clientY = (event as TouchEvent<HTMLDivElement>).changedTouches[0]
+				.clientY;
+
+			cursor = getCursor(clientX, clientY);
+		} else {
+			clientX = (event as MouseEvent<HTMLDivElement>).clientX;
+			clientY = (event as MouseEvent<HTMLDivElement>).clientY;
+			cursor = ref.current!.style.cursor;
+		}
+		// focus! >:(
+		focus!();
+		if ((event.target as HTMLDivElement).id == "window-control-btn") return;
 		setState((prevState) => ({
 			...prevState,
 			isDragging: true,
 			startDrag: {
-				x: event.clientX,
-				y: event.clientY,
+				x: clientX,
+				y: clientY,
 			},
-            maximized: delta < 250 ? !prevState.maximized : prevState.maximized,
-            lastMouseDownTime: time
+			cursor,
 		}));
 	};
 
-	const handleMouseUp = (event: globalThis.MouseEvent) => {
-        if ((event.target as HTMLDivElement).id != "cursor-overlay")
-            return;
-		setState((prevState) => ({ ...prevState, isDragging: false, soundPlayed: false }));
+	const handleMouseUp = (
+		event: globalThis.MouseEvent | globalThis.TouchEvent
+	) => {
+		let time = new Date().getTime();
+		let delta = time - state.lastMouseDownTime;
+		if (event.type != "mouseup")
+			time = state.lastMouseDownTime
+		if (
+			event.type == "mouseup" &&
+			(event.target as HTMLDivElement).id != "cursor-overlay"
+		)
+			return;
+		setState((prevState) => ({
+			...prevState,
+			isDragging: false,
+			soundPlayed: false,
+			maximized: delta < 250 ? !prevState.maximized : prevState.maximized,
+			lastMouseDownTime: time,
+		}));
 	};
-
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
+		window.addEventListener("touchend", handleMouseUp);
+
 		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("touchmove", handleMouseMove);
 		return () => {
 			window.removeEventListener("mouseup", handleMouseUp);
+			window.removeEventListener("touchend", handleMouseUp);
+	
 			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("touchmove", handleMouseMove);
 		};
-	}, [state.isDragging, state.soundPlayed]);
+	}, [
+		state.isDragging,
+		state.soundPlayed,
+		state.startDrag,
+		focused,
+		zIndex,
+		state.lastMouseDownTime,
+	]);
 	return (
 		<div
 			id="window"
 			ref={ref}
-			style={removeHeader ? {
-				cursor: state.cursor,
-				left: "-9px",
-				top: "-39px",
-				zIndex: zIndex,
-				visibility: "hidden",
-				display: minimized ? "none" : "block"
-			} : {
-				cursor: state.cursor,
-				height: state.maximized ? 'calc(100% - 42px)' : state.sizes.height,
-				width: state.maximized ? 'calc(100% - 5px)' : state.sizes.width,
-				left: state.maximized ? '-4px' : state.sizes.left,
-				top: state.maximized ? '-3px' : state.sizes.top,
-				backgroundColor: focused ? backgroundColor : "#DEDEDE",
-				boxShadow: focused ? "4px 4px 0px 0px rgba(176, 164, 233, 0.6)" : "none",
-				zIndex: zIndex,
-				display: minimized ? "none" : "block"
-			}}
+			style={
+				removeHeader
+					? {
+							cursor: state.cursor,
+							left: "-9px",
+							top: "-39px",
+							zIndex: zIndex,
+							visibility: "hidden",
+							display: minimized ? "none" : "block",
+					  }
+					: {
+							cursor: state.cursor,
+							height: state.maximized
+								? "calc(100% - 42px)"
+								: state.sizes.height,
+							width: state.maximized
+								? "calc(100% - 5px)"
+								: state.sizes.width,
+							left: state.maximized ? "-4px" : state.sizes.left,
+							top: state.maximized ? "-3px" : state.sizes.top,
+							backgroundColor: focused
+								? backgroundColor
+								: "#DEDEDE",
+							boxShadow: focused
+								? "4px 4px 0px 0px rgba(176, 164, 233, 0.6)"
+								: "none",
+							zIndex: zIndex,
+							display: minimized ? "none" : "block",
+					  }
+			}
 			onMouseDown={handleMouseDown}
+			onTouchStart={handleMouseDown}
 			className={styles["window"]}
 		>
-            <WindowHeader
+			<WindowHeader
 				close={() => deleteSelf!()}
 				minimize={() => minimizeSelf!()}
 				maximize={() =>
 					setState({ ...state, maximized: !state.maximized })
 				}
-				icon={iconUrl || ''}
+				icon={iconUrl || ""}
 				title={title}
 				focused={focused ?? true}
 			/>
-			<div className={styles['container']}>
-				<Component close={() => deleteSelf!()} minimize={() => minimizeSelf!()} />
+			<div className={styles["container"]}>
+				<Component
+					close={() => deleteSelf!()}
+					minimize={() => minimizeSelf!()}
+				/>
 			</div>
 			{state.isDragging && (
 				<div
-                    id="cursor-overlay"
+					id="cursor-overlay"
 					className={styles["cursor-overlay"]}
 					style={{
 						cursor: state.cursor,
 					}}
 				></div>
 			)}
-            {!focused && (
+			{!focused && (
 				<div
 					onMouseDown={() => {
 						focus!();
 					}}
+					onTouchStart={() => {
+						focus!();
+					}}
 					className={styles["window-overlay"]}
 				></div>
-            )}
+			)}
 		</div>
 	);
 };

@@ -68,10 +68,18 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 	const [shortCuts, setShortCuts] = useState(getApps(unselectAll, launchApp));
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
+		window.addEventListener("touchend", handleMouseUp);
+
+
 		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("touchmove", handleMouseMove);
 		return () => {
 			window.removeEventListener("mouseup", handleMouseUp);
+			window.removeEventListener("touchend", handleMouseUp);
+	
+	
 			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("touchmove", handleMouseMove);
 		};
 	}, [scDragState.isDragging]);
 
@@ -82,10 +90,20 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 		}));
 	};
 
-	const handleMouseMove = (event: globalThis.MouseEvent) => {
+	const handleMouseMove = (event: globalThis.MouseEvent | globalThis.TouchEvent) => {
+		let clientX, clientY
+		if (event instanceof globalThis.TouchEvent) {
+			clientX = event.changedTouches[0].clientX
+			clientY = event.changedTouches[0].clientY
+		}
+		else {
+			clientX = event.clientX
+			clientY = event.clientY
+		}
+
 		if (scDragState.isDragging) {
-			let hDrag = event.clientX - scDragState.startPos.x;
-			let vDrag = event.clientY - scDragState.endPos.y;
+			let hDrag = clientX - scDragState.startPos.x;
+			let vDrag = clientY - scDragState.endPos.y;
 
 			let _shortCuts = shortCuts.map((shortcut) => {
 				const _shortcut = { ...shortcut };
@@ -103,6 +121,7 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 		<div
 			id="desktop"
 			ref={ref}
+			onTouchStart={mouseDownHandler}
 			onMouseDown={mouseDownHandler}
 			className={styles["Desktop"]}
 		>

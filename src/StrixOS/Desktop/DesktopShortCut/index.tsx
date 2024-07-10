@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, TouchEvent, useEffect, useRef, useState } from "react";
 import styles from "./DesktopShortCut.module.scss";
 import { DragState, Sizes } from "../../../utils/types";
 
@@ -29,6 +29,8 @@ const DesktopShortCut = ({
 }: DesktopShortCut) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [mouseDownTime, setMouseDownTime] = useState(0)
+	const [touchEndTime, setTouchEndTime] = useState(0)
+
 	useEffect(() => {
 		const selectionBox = document.getElementById("selection-box");
 		if (selectionBox) {
@@ -52,17 +54,27 @@ const DesktopShortCut = ({
 		}
 	}, [sizes]);
 
-	const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
-		event.preventDefault();
+	const handleMouseDown = (event: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+		let clientX, clientY
+		if (event.type == "touchstart") {
+			clientX = (event as TouchEvent<HTMLDivElement>).changedTouches[0].clientX
+			clientY = (event as TouchEvent<HTMLDivElement>).changedTouches[0].clientY
+		}
+		else {
+			event.preventDefault();
+			clientX = (event as MouseEvent<HTMLDivElement>).clientX
+			clientY = (event as MouseEvent<HTMLDivElement>).clientY
+		}	
+
 		if (!selected) setSelectedAlone();
 		setScDragState({
 			startPos: {
-				x: event.clientX,
-				y: event.clientY,
+				x: clientX,
+				y: clientY,
 			},
 			endPos: {
-				x: event.clientX,
-				y: event.clientY,
+				x: clientX,
+				y: clientY,
 			},
 			isDragging: true,
 		});
@@ -71,12 +83,17 @@ const DesktopShortCut = ({
 	return (
 		<div
 			onMouseDown={handleMouseDown}
+			onTouchStart={handleMouseDown}
 			onMouseUp={() => {
-				const deltaT = (new Date()).getTime() - mouseDownTime
+				let deltaT = (new Date()).getTime() - mouseDownTime
 				if (deltaT < 250)
 					setSelectedAlone()
+				deltaT = (new Date()).getTime() - touchEndTime
+				if (deltaT < 250) {
+					launch()
+				}
+				setTouchEndTime((new Date()).getTime())
 			}}
-			onDoubleClick={launch}
 			ref={ref}
 			style={{
 				left: left,

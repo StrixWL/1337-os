@@ -1,6 +1,6 @@
 import { Sizes } from "../../utils/types";
 import { DragState } from "../../utils/types";
-import { MouseEvent, useRef, useState, useEffect } from "react";
+import { MouseEvent, useRef, useState, useEffect, TouchEvent } from "react";
 
 interface SelectionBoxProps {
 	sizes: Sizes;
@@ -60,10 +60,18 @@ const useSelectionBox = () => {
 	}, [boxDragState]);
 	useEffect(() => {
 		window.addEventListener("mouseup", handleMouseUp);
+		window.addEventListener("touchend", handleMouseUp);
+
+
 		window.addEventListener("mousemove", handleMouseMove);
+		window.addEventListener("touchmove", handleMouseMove);
 		return () => {
 			window.removeEventListener("mouseup", handleMouseUp);
+			window.removeEventListener("touchend", handleMouseUp);
+	
+	
 			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("touchmove", handleMouseMove);
 		};
 	}, [boxDragState]);
 	const handleMouseUp = () => {
@@ -80,10 +88,20 @@ const useSelectionBox = () => {
 			height: 0,
 		});
 	};
-	const handleMouseMove = (event: globalThis.MouseEvent) => {
+	const handleMouseMove = (event: globalThis.MouseEvent | globalThis.TouchEvent) => {
+		let clientX, clientY
+		if (event instanceof globalThis.TouchEvent) {
+			clientX = event.changedTouches[0].clientX
+			clientY = event.changedTouches[0].clientY
+		}
+		else {
+			clientX = event.clientX
+			clientY = event.clientY
+		}
+
 		const boundingRect = ref.current!.getBoundingClientRect();
-		var posX = event.clientX + window.scrollX - boundingRect.left;
-		var posY = event.clientY + window.scrollY - boundingRect.top;
+		var posX = clientX + window.scrollX - boundingRect.left;
+		var posY = clientY + window.scrollY - boundingRect.top;
 		if (boxDragState.isDragging) {
 			setDragState({
 				...boxDragState,
@@ -94,7 +112,18 @@ const useSelectionBox = () => {
 			});
 		}
 	};
-	const mouseDownHandler = (event: MouseEvent<HTMLDivElement>) => {
+	const mouseDownHandler = (event: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+		let clientX, clientY
+		if (event.type == "touchstart") {
+			clientX = (event as TouchEvent<HTMLDivElement>).changedTouches[0].clientX
+			clientY = (event as TouchEvent<HTMLDivElement>).changedTouches[0].clientY
+		}
+		else {
+			event.preventDefault();
+			clientX = (event as MouseEvent<HTMLDivElement>).clientX
+			clientY = (event as MouseEvent<HTMLDivElement>).clientY
+		}	
+
 		if ((event.target as HTMLDivElement).classList.contains("shortcut")) {
 			setDragState({
 				...boxDragState,
@@ -104,8 +133,8 @@ const useSelectionBox = () => {
 		}
 		if ((event.target as HTMLDivElement).id != "desktop") return;
 		const boundingRect = ref.current!.getBoundingClientRect();
-		var posX = event.clientX + window.scrollX - boundingRect.left;
-		var posY = event.clientY + window.scrollY - boundingRect.top;
+		var posX = clientX + window.scrollX - boundingRect.left;
+		var posY = clientY + window.scrollY - boundingRect.top;
 		setDragState({
 			...boxDragState,
 			isDragging: true,
