@@ -46,8 +46,10 @@ const buttons = [
 		},
 	},
 	{
-		name: "Programs",
-		onClick: () => {},
+		name: "Contact",
+		onClick: () => {
+			window.open('https://discord.com/users/207285913850609664', '_blank')
+		},
 	},
 	{
 		name: "Source Code",
