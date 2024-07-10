@@ -12,7 +12,8 @@ interface DesktopShortCut {
 	setSelectedAlone: () => void; // sets shortcut selected and remove all other shortcuts
 	selected: boolean;
 	setScDragState: (state: DragState) => void;
-	launch: () => void
+	launch: () => void;
+	isDragging: boolean;
 }
 
 const DesktopShortCut = ({
@@ -24,6 +25,7 @@ const DesktopShortCut = ({
 	setSelected,
 	setSelectedAlone,
 	selected,
+	isDragging,
 	setScDragState,
 	launch
 }: DesktopShortCut) => {
@@ -98,6 +100,7 @@ const DesktopShortCut = ({
 			style={{
 				left: left,
 				top: top,
+				zIndex: selected && isDragging ? 214748364 : 0,
 			}}
 			className={`${styles["desktop-shortcut"]} shortcut`}
 		>

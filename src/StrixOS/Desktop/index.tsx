@@ -144,6 +144,7 @@ const Desktop = ({ children, launchApp }: Desktop) => {
 						});
 						_shortCuts[index].selected = true;
 					}}
+					isDragging={scDragState.isDragging}
 					selected={shortcut.selected}
 					setScDragState={setScDragState}
 					launch={shortcut.launch}
