@@ -78,12 +78,12 @@ const Window = ({
 		event: globalThis.MouseEvent | globalThis.TouchEvent
 	) => {
 		let clientX, clientY;
-		if (event instanceof globalThis.TouchEvent) {
-			clientX = event.changedTouches[0].clientX;
-			clientY = event.changedTouches[0].clientY;
+		if (event.type == "touchmove") {
+			clientX = (event as globalThis.TouchEvent).changedTouches[0].clientX;
+			clientY = (event as globalThis.TouchEvent).changedTouches[0].clientY;
 		} else {
-			clientX = event.clientX;
-			clientY = event.clientY;
+			clientX = (event as globalThis.MouseEvent).clientX;
+			clientY = (event as globalThis.MouseEvent).clientY;
 		}
 		if (!state.isDragging) {
 			let cursor = getCursor(clientX, clientY);
