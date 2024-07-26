@@ -1,8 +1,12 @@
 import StrixOS from "./StrixOS";
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
-    <StrixOS />
+    <>
+      <Analytics />
+      <StrixOS />
+    </>
   )
 }
 
