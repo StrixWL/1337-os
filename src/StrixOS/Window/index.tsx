@@ -19,8 +19,8 @@ interface WindowState {
 
 const Window = ({
 	backgroundColor = "black",
-	resizeOffset = 5,
-	dragOffset = 35,
+	resizeOffset = 12,
+	dragOffset = 40,
 	minWidth = 200,
 	minHeight = 200,
 	width = 510,
@@ -68,7 +68,7 @@ const Window = ({
 			cursor = "ne-resize";
 		else if (top < resizeOffset) cursor = "n-resize";
 		else if (left < resizeOffset) cursor = "w-resize";
-		else if (bottom < resizeOffset) cursor = "s-resize";
+		else if (bottom < resizeOffset + 10) cursor = "s-resize";
 		else if (right < resizeOffset) cursor = "e-resize";
 		else if (top < dragOffset) cursor = "default";
 
